@@ -139,6 +139,7 @@ $conn->close();
             xhr.open("POST", "book_seats.php", true);
             xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
             xhr.send("selectedSeats=" + encodeURIComponent(JSON.stringify(selectedSeatNumbers)) + "&movieId=" + encodeURIComponent(movieId));
+            window.href("book_seat.php");
         }
 
         loadAvailableSeats();
