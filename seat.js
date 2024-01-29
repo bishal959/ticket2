@@ -9,7 +9,7 @@ function bookSelectedSeats() {
 
     // Send the selected seat information to the server for booking
     const movieId = 1; // Replace with the actual movie ID
-    const theaterId = 1; // Replace with the actual theater ID
+    // Replace with the actual theater ID
 
     const xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function() {
@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         };
 
-        xhr.open("GET", "movie_detail.php", true); // Replace with the actual URL of your PHP script
+        xhr.open("GET", "get_available_seats.php?movie_id=2", true); // Replace with the actual URL of your PHP script
         xhr.send();
     }
 

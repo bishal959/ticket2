@@ -1,18 +1,30 @@
 .seat {
     width: 40px;
-    height: 40px;
-    margin: 5px;
-    background-color: green;
-    color:white;
-    display: inline-block;
-    cursor: pointer;
+  height: 40px;
+  margin: 5px;
+  background-color: #387a21;
+  color: white;
+ 
+  cursor: pointer;
+  border-radius: 5px;
+  align-items: center;
+  justify-content: center;
+  display: inline-flex;
+
 }
+.seat:hover {
+    opacity: 0.5;
+    transition: all 200ms ease 0s;
+}
+
+  
 .unavailable {
-    background-color: red; /* Change to your desired color for unavailable seats */
+    background-color:#5a110c !important;/* Change to your desired color for unavailable seats */
     cursor: not-allowed;
+    
 }
 .selected {
-    background-color: blue; /* Change to your desired color for selected seats */
+    background-color: #5f95f3; /* Change to your desired color for selected seats */
 }
 #screen {
     width: 500px;
@@ -124,4 +136,5 @@ h2 {
         justify-content: center;
     }
 }
+
 

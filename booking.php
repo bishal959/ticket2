@@ -14,7 +14,7 @@ if (isset($_GET['movieId'])) {
         // Handle the error, such as redirecting to an error page
         die("Query failed: " . $conn->error);
     }
-
+if
     $movie = $result->fetch_assoc();
     $conn->close();
 } else {

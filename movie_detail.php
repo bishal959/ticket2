@@ -1,5 +1,6 @@
 <?php
-include('config.php'); // Include your database connection file
+include('config.php');
+// Include your database connection file
 
 // Check if the movie_id parameter is set in the URL
 if (isset($_GET['movie_id'])) {
@@ -19,15 +20,18 @@ if (isset($_GET['movie_id'])) {
         echo '<p>Run Time: ' . $movie['runTime'] . '</p>';
         echo '<p>Director: ' . $movie['director'] . '</p>';
         echo '<p>Cast: ' . implode(', ', explode(", ", $movie['cast'])) . '</p>';
-        
-
-        
     }
 }
-$conn->close();
-$theaterId=1;
-?>
 
+
+
+
+
+
+// Close the connection
+$conn->close();
+
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -36,26 +40,27 @@ $theaterId=1;
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Movie Detail</title>
     <link rel="stylesheet" href="style.css">
-</head>
+    </head>
+    </head>
 <body>
-<h2>Theater Seats</h2>
+    <h2>Theater Seats</h2>
 
-<div id="screen">Screen</div>
+    <div id="screen">Screen</div>
 
-<div id="seats-container">
-    <!-- Seats will be loaded dynamically here -->
-</div>
+    <div id="seats-container">
+        <!-- Seats will be loaded dynamically here -->
+    </div>
 
-<button id="book-button" onclick="bookSelectedSeats()">Book Selected Seats</button>
-<script>
+    <div id="seatContainer">
+        <h3>Selected Seats:</h3>
+        <ul id="selectedSeats"></ul>
+        <button id="book-button" onclick="bookSeats()">Book Selected Seats</button>
+    </div>
 
-        const movieId = <?php echo $movieId; ?>;
-        const theaterId = <?php echo $theaterId; ?>;
-        const seatsContainer = document.getElementById("seats-container");
-
-        // Function to load available seats from the server
+    <script>
+        // Replace the movie ID with your actual movie ID
+        var movieId = <?php echo $movieId; ?>;
         function loadAvailableSeats() {
-            // Make an AJAX request to your PHP script
             const xhr = new XMLHttpRequest();
             xhr.onreadystatechange = function() {
                 if (xhr.readyState === XMLHttpRequest.DONE) {
@@ -68,84 +73,75 @@ $theaterId=1;
                 }
             };
 
-            xhr.open("GET", "movie_detail.php?movie_id=" + movieId, true); // Pass movie_id in the URL
+            xhr.open("GET", "get_available_seats.php?movie_id=" + movieId, true);
             xhr.send();
         }
 
-        // Function to update seats based on available seats data
         function updateSeats(availableSeats) {
-            const rows = 5; // Replace with the actual number of rows
-            const seatsPerRow = 10; // Replace with the actual number of seats per row
+            const seatsContainer = document.getElementById("seats-container");
+            seatsContainer.innerHTML = "";
 
-            seatsContainer.innerHTML = ""; // Clear existing seats
+            const seatsPerRow = 10;
+            let currentRowContainer;
 
-            for (let row = 1; row <= rows; row++) {
-                for (let seatNum = 1; seatNum <= seatsPerRow; seatNum++) {
-                    const seat = document.createElement("div");
-                    seat.className = "seat";
-                    seat.setAttribute("data-row", row);
-                    seat.setAttribute("data-seat-num", seatNum);
-                    seat.textContent = seatNum;
-
-                    // Check if the seat is available
-                    const isAvailable = availableSeats.some(s => s.row == row && s.seatNum == seatNum);
-                    if (!isAvailable) {
-                        seat.classList.add("unavailable");
-                        seat.setAttribute("title", "Unavailable");
-                        seat.removeEventListener("click", toggleSeatSelection);
-                    } else {
-                        seat.addEventListener("click", toggleSeatSelection);
-                    }
-
-                    seatsContainer.appendChild(seat);
+            availableSeats.forEach(function(seat, index) {
+                if (index % seatsPerRow === 0) {
+                    currentRowContainer = document.createElement("div");
+                    currentRowContainer.className = "row";
+                    seatsContainer.appendChild(currentRowContainer);
                 }
-                seatsContainer.appendChild(document.createElement("br"));
-            }
+
+                const seatElement = document.createElement("div");
+                seatElement.className = "seat";
+                seatElement.setAttribute("data-seat-number", seat.seat_number);
+                seatElement.textContent = seat.seat_number;
+
+                if (seat.availability_status !== "Available") {
+                    seatElement.classList.add("unavailable");
+                    seatElement.setAttribute("title", "Unavailable");
+                    seatElement.removeEventListener("click", toggleSeatSelection);
+                } else {
+                    seatElement.addEventListener("click", toggleSeatSelection);
+                }
+
+                currentRowContainer.appendChild(seatElement);
+            });
         }
 
-        // Function to toggle seat selection
         function toggleSeatSelection() {
             this.classList.toggle("selected");
-            const row = this.getAttribute("data-row");
-            const seatNum = this.getAttribute("data-seat-num");
-            console.log("Selected Seat:", "Row:", row, "Seat Number:", seatNum);
+            const seatNumber = this.getAttribute("data-seat-number");
+            console.log("Selected Seat: Seat Number:", seatNumber);
         }
 
-        // Load available seats on page load
-        document.addEventListener("DOMContentLoaded", function() {
-            loadAvailableSeats();
-        });
-
-        function bookSelectedSeats() {
-            const selectedSeats = document.querySelectorAll('.selected');
-            const seatInfo = Array.from(selectedSeats).map(seat => {
-                return {
-                    row: seat.getAttribute("data-row"),
-                    seatNum: seat.getAttribute("data-seat-num")
-                };
+        function bookSeats() {
+            const selectedSeats = document.querySelectorAll(".selected");
+            const selectedSeatNumbers = Array.from(selectedSeats).map(function(seat) {
+                return seat.getAttribute("data-seat-number");
             });
 
-            // Send the selected seat information to the server for booking
+            // Perform booking logic (you can send selected seat numbers to the server)
+            console.log("Selected Seats: ", selectedSeatNumbers);
+
+            // Send selected seat numbers to the PHP file using AJAX
             const xhr = new XMLHttpRequest();
             xhr.onreadystatechange = function() {
                 if (xhr.readyState === XMLHttpRequest.DONE) {
                     if (xhr.status === 200) {
-                        console.log(xhr.responseText);
+                        console.log("Booking successful");
+                        // Add any additional logic or UI updates here
                     } else {
                         console.error("Error booking seats:", xhr.status, xhr.statusText);
                     }
                 }
             };
 
-            xhr.open("POST", "book_seats.php", true); // Replace with the actual URL of your PHP script
+            xhr.open("POST", "book_seats.php", true);
             xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-
-            const data = "movie_id=" + encodeURIComponent(movieId) + "&theater_id=" + encodeURIComponent(theaterId) + "&selected_seats=" + encodeURIComponent(JSON.stringify(seatInfo));
-
-            xhr.send(data);
+            xhr.send("selectedSeats=" + encodeURIComponent(JSON.stringify(selectedSeatNumbers)) + "&movieId=" + encodeURIComponent(movieId));
         }
+
+        loadAvailableSeats();
     </script>
-
-
 </body>
 </html>

@@ -99,12 +99,7 @@ document.addEventListener("DOMContentLoaded", function() {
         movieElement.className = "movie";
         movieElement.innerHTML = `
             <h3>${movie.title}</h3>
-            <p>ID: ${movie.id}</p>
-            <p>Genre: ${movie.genre}</p>
-            <p>Releasing Date: ${movie.releaseDate}</p>
-            <p>Run Time: ${movie.runTime || 'Not available'}</p>
-            <p>Director: ${movie.director || 'Not available'}</p>
-            <p>Cast: ${movie.cast.length ? movie.cast.join(", ") : 'Not available'}</p>
+            <a href="movie_detail.php?movie_id=${movie.id}">
             <img src="${movie.imageUrl || 'placeholder_image_url.jpg'}" alt="${movie.title} Poster"  class="movie-poster">
         `;
 
