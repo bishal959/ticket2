@@ -1,6 +1,6 @@
 <?php
 
-$servername = "localhost";
+$servername = "sql108.infinityfree.com";
 $username = "epiz_34107324";
 $password = "bb7P9jJ0VpqzCv";
 $dbname = "epiz_34107324_movie";
