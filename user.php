@@ -1,18 +1,15 @@
 <?php
-
-if ($_SESSION !=="null") {
-    header("Location: ../login.php");
-}
+session_start();
+include("function.php");
+include("config.php");
+$user_id=$_SESSION['id'];
+echo "$user_id";
 
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Movie Ticket Site</title>
-    <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -58,7 +55,7 @@ if ($_SESSION !=="null") {
                     </li>
                     <li class="flex-1 md:flex-none md:mr-3">
                         <div class="relative inline-block">
-                            <button onclick="toggleDD('myDropdown')" class="drop-button text-white focus:outline-none"> <span class="pr-2"><i class="em em-robot_face"></i></span> Hi, <?php print_r($_SESSION['admin_name']); ?> <svg class="h-3 fill-current inline" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                            <button onclick="toggleDD('myDropdown')" class="drop-button text-white focus:outline-none"> <span class="pr-2"><i class="em em-robot_face"></i></span> Hi, <?php print_r($_SESSION['username']); ?> <svg class="h-3 fill-current inline" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                                     <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" /></svg></button>
                             <div id="myDropdown" class="dropdownlist absolute bg-gray-800 text-white right-0 mt-3 p-3 overflow-auto z-30 invisible">
                                 <input type="text" class="drop-search p-2 text-gray-600" placeholder="Search.." id="myInput" onkeyup="filterDD('myDropdown','myInput')">
@@ -82,14 +79,15 @@ if ($_SESSION !=="null") {
 
             <div class="md:mt-12 md:w-48 md:fixed md:left-0 md:top-0 content-center md:content-start text-left justify-between">
                 <ul class="list-reset flex flex-row md:flex-col py-0 md:py-3 px-1 md:px-2 text-center md:text-left">
+                    
                     <li class="mr-3 flex-1">
-                        <a href="student.php" class="block py-1 md:py-3 pl-1 align-middle text-white no-underline hover:text-white border-b-2 border-gray-800 hover:border-pink-500">
-                            <i class="fa fa-graduation-cap pr-0 md:pr-3"></i><span class="pb-1 md:pb-0 text-xs md:text-base text-gray-600 md:text-gray-400 block md:inline-block">Student</span>
+                        <a href="#" class="block py-1 md:py-3 pl-1 align-middle text-white no-underline hover:text-white border-b-2 border-gray-800 border-purple-600">
+                            <i class="fa fa-envelope pr-0 md:pr-3"></i><span class="pb-1 md:pb-0 text-xs md:text-base text-gray-600 md:text-gray-400 block md:inline-block">My Reservation</span>
                         </a>
                     </li>
                     <li class="mr-3 flex-1">
-                        <a href="#" class="block py-1 md:py-3 pl-1 align-middle text-white no-underline hover:text-white border-b-2 border-gray-800 border-purple-600">
-                            <i class="fa fa-envelope pr-0 md:pr-3"></i><span class="pb-1 md:pb-0 text-xs md:text-base text-gray-600 md:text-gray-400 block md:inline-block">Messages</span>
+                        <a href="student.php" class="block py-1 md:py-3 pl-1 align-middle text-white no-underline hover:text-white border-b-2 border-gray-800 hover:border-pink-500">
+                            <i class="fa fa-graduation-cap pr-0 md:pr-3"></i><span class="pb-1 md:pb-0 text-xs md:text-base text-gray-600 md:text-gray-400 block md:inline-block">Tickets</span>
                         </a>
                     </li>
                     <li class="mr-3 flex-1">
@@ -103,8 +101,101 @@ if ($_SESSION !=="null") {
 
         </div>
 
+        <div class="main-content flex-1 bg-gray-100 mt-12 md:mt-2 pb-24 md:pb-5">
 
-<!-- Your main content goes here -->
+            <div class="bg-gray-800 pt-3">
+                <div class="rounded-tl-3xl bg-gradient-to-r from-purple-900 to-gray-800 p-4 shadow text-2xl text-white">
+                    <h3 class="font-bold pl-2">Reserve ticket</h3>
+                </div>
+            </div>
+    <div>
+    <div class="max-w-5xl mx-1  rounded ">
+<table class="w-full border-collapse border border-gray-300">
+    <thead>
+        <tr class="bg-gray-100">
+            <th class="py-3 px-4 pr-24 border-b">Show Details</th>
+            <th class="py-3 px-4 pr-24  border-b">Date</th>
+            <th class="py-3  pr-24  border-b">Quantity</th>
+            <th class="py-3 px-4 pr-24  border-b">Price</th>
+            <th class="py-3 px-4 pr-24  border-b">Click to Pay</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php
+        foreach ($showDetails as $booking) {
+            echo '<tr class="border-b">';
+            echo '<td class="py-2 px-4">' . $booking['movie_title'] . '</td>';
+            echo '<td class="py-2 px-4">' . $booking['show_date'] . '</td>';
+            echo '<td class="py-2 px-3">' . $booking['quantity'] . '</td>';
+            echo '<td class="py-2 px-4">Rs.' . number_format($booking['unit_price'], 2) . '</td>';
+            echo '<td class="py-2 px-4"><button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Pay Rs.' . number_format($booking['total_price'], 2) . '</button></td>';
+            echo '</tr>';
+        }
+        ?>
+    </tbody>
+</table>
+
+
+
+
+        <!-- Additional Information or Actions -->
+        <div class="mt-4">
+            <p class="text-gray-600">Note: <span class="text-black font-semibold">Enjoy the movie!</span></p>
+            <!-- You can add additional information or actions here -->
+        </div>
+    </div>
+    <script>
+    // Get the  container
+    const Container = document.getElementById("-container");
+
+    // Check for GET parameters (s from PHP)
+    const urlParams = new URLSearchParams(window.location.search);
+    const success = urlParams.get("success");
+    const error = urlParams.get("error");
+
+    // Display s
+    if (success) {
+        Container.innerHTML = `<p class="text-green-600 sucess-">${success}</p>`;
+    } else if (error) {
+        Container.innerHTML = `<p class="text-rose-700 error-">${error}</p>`;
+    }
+        /*Toggle dropdown list*/
+        function toggleDD(myDropMenu) {
+            document.getElementById(myDropMenu).classList.toggle("invisible");
+        }
+        /*Filter dropdown options*/
+        function filterDD(myDropMenu, myDropMenuSearch) {
+            var input, filter, ul, li, a, i;
+            input = document.getElementById(myDropMenuSearch);
+            filter = input.value.toUpperCase();
+            div = document.getElementById(myDropMenu);
+            a = div.getElementsByTagName("a");
+            for (i = 0; i < a.length; i++) {
+                if (a[i].innerHTML.toUpperCase().indexOf(filter) > -1) {
+                    a[i].style.display = "";
+                } else {
+                    a[i].style.display = "none";
+                }
+            }
+        }
+        // Close the dropdown menu if the user clicks outside of it
+        window.onclick = function(event) {
+            if (!event.target.matches('.drop-button') && !event.target.matches('.drop-search')) {
+                var dropdowns = document.getElementsByClassName("dropdownlist");
+                for (var i = 0; i < dropdowns.length; i++) {
+                    var openDropdown = dropdowns[i];
+                    if (!openDropdown.classList.contains('invisible')) {
+                        openDropdown.classList.add('invisible');
+                    }
+                }
+            }
+        }
+    </script>
+
+
+    
+
 
 </body>
+
 </html>

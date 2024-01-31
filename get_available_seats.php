@@ -7,7 +7,7 @@ if (isset($_GET['movie_id'])) {
     $movieId = $_GET['movie_id'];
 
     // Fetch available seats for the specific movie from the database
-    $sql = "SELECT seat_number, availability_status FROM seats WHERE movie_id = ?";
+    $sql = "SELECT seat_number, availability_status, price FROM seats WHERE movie_id = ?";
     $stmt = $conn->prepare($sql);
 
     if ($stmt) {

@@ -23,6 +23,9 @@
     cursor: not-allowed;
     
 }
+.Booked{
+    background-color: #f7bb2a;
+}
 .selected {
     background-color: #5f95f3; /* Change to your desired color for selected seats */
 }
