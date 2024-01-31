@@ -2,8 +2,9 @@
 session_start();
 include("function.php");
 include("config.php");
-$user_id=$_SESSION['id'];
-echo "$user_id";
+include("esewa.php");
+$userId=$_SESSION['user_id'];
+$showDetails = getShowDetailsByUserId($userId);
 
 ?>
 <!DOCTYPE html>
@@ -115,7 +116,7 @@ echo "$user_id";
         <tr class="bg-gray-100">
             <th class="py-3 px-4 pr-24 border-b">Show Details</th>
             <th class="py-3 px-4 pr-24  border-b">Date</th>
-            <th class="py-3  pr-24  border-b">Quantity</th>
+            <th class="py-3  pr-24  border-b">Seats</th>
             <th class="py-3 px-4 pr-24  border-b">Price</th>
             <th class="py-3 px-4 pr-24  border-b">Click to Pay</th>
         </tr>
@@ -127,10 +128,11 @@ echo "$user_id";
             echo '<td class="py-2 px-4">' . $booking['movie_title'] . '</td>';
             echo '<td class="py-2 px-4">' . $booking['show_date'] . '</td>';
             echo '<td class="py-2 px-3">' . $booking['quantity'] . '</td>';
-            echo '<td class="py-2 px-4">Rs.' . number_format($booking['unit_price'], 2) . '</td>';
+            echo '<td class="py-2 px-4">Rs.' . number_format  ($booking['unit_price'], 2) . '</td>';
             echo '<td class="py-2 px-4"><button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Pay Rs.' . number_format($booking['total_price'], 2) . '</button></td>';
             echo '</tr>';
         }
+
         ?>
     </tbody>
 </table>
@@ -145,20 +147,6 @@ echo "$user_id";
         </div>
     </div>
     <script>
-    // Get the  container
-    const Container = document.getElementById("-container");
-
-    // Check for GET parameters (s from PHP)
-    const urlParams = new URLSearchParams(window.location.search);
-    const success = urlParams.get("success");
-    const error = urlParams.get("error");
-
-    // Display s
-    if (success) {
-        Container.innerHTML = `<p class="text-green-600 sucess-">${success}</p>`;
-    } else if (error) {
-        Container.innerHTML = `<p class="text-rose-700 error-">${error}</p>`;
-    }
         /*Toggle dropdown list*/
         function toggleDD(myDropMenu) {
             document.getElementById(myDropMenu).classList.toggle("invisible");

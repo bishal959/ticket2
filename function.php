@@ -1,5 +1,6 @@
 <?php
 include("config.php");
+include("esewa.php");
 
 function getShowDetailsByUserId($userId) {
     global $conn;
@@ -40,14 +41,15 @@ function getShowDetailsByUserId($userId) {
         return [];
     }
 }
-
-// Example usage:
-$userId = 1; // Replace with the actual user_id
-$showDetails = getShowDetailsByUserId($userId);
-
-// Print or use $showDetails as needed
-
-
-// Close the database connection
 $conn->close();
+function generateRandomProductCode() {
+    $characters = '0123456789';
+    $code = '';
+    
+    for ($i = 0; $i < 6; $i++) {
+        $code .= $characters[rand(0, strlen($characters) - 1)];
+    }
+    
+    return $code;
+}
 ?>
