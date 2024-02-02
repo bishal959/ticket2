@@ -130,7 +130,7 @@ $showDetails = getpaidShowDetailsByUserId($userId);
         $amount = $booking['unit_price'];
         $tamount = $booking['unit_price'];
         $productId = generateRandomProductCode();
-        $printticket = "http://localhost/k/user/ticket.php?booked_seat=" . urlencode($booking['quantity']);
+        $printticket = "http://bibekluitel.rf.gd/user/ticket.php?booked_seat=" . urlencode($booking['quantity']);
         
         
         echo '<tr class="border-b">';
