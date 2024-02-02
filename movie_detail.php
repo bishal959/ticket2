@@ -1,8 +1,9 @@
 <?php
+session_start();
 include('config.php');
 include("session.php");
 // Include your database connection file
-session_start();
+
 $username = $_SESSION["username"];
 
 // Check if the movie_id parameter is set in the URL
