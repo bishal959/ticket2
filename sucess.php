@@ -16,6 +16,7 @@ $amount = isset($_GET['amt']) ? $_GET['amt'] : '';
 $refId = isset($_GET['refId']) ? $_GET['refId'] : '';
 // $verifyPaymentForm = $esewa->verifyPayment($amount, $refId, $oid);
 $bookedseat = $_GET['booked_seat']; 
+echo $bookedseat;
 $result = updatetopaid($bookedseat);
 if ($result !== false && $result > 0) {
     echo "Booking payment status updated successfully. Affected rows: " . $result;
