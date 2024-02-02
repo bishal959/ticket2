@@ -353,9 +353,7 @@ ALTER TABLE `theaters`
 ALTER TABLE `users`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
---
--- Constraints for dumped tables
---
+
 
 --
 -- Constraints for table `bookings`
