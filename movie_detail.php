@@ -41,20 +41,7 @@ $conn->close();
 </head>
 
 <body>
-    <h2>Theater Seats</h2>
-
-    <div id="screen">Screen</div>
-
-    <div id="seats-container">
-        <!-- Seats will be loaded dynamically here -->
-    </div>
-
-    <div id="seatContainer">
-        <h3>Selected Seats:</h3>
-        <ul id="selectedSeats"></ul>
-        <div id="totalPrice"></div>
-        <button id="book-button" onclick="bookSeats()">Book Selected Seats</button>
-    </div>
+    
     <nav class="bg-gray-800 pt-2 md:pt-1 pb-1 px-1 mt-0 h-auto fixed w-full z-20 top-0">
 
 <div class="flex flex-wrap items-center">
@@ -140,6 +127,20 @@ $conn->close();
         </div>
     </div>
 <div>
+<h2>Theater Seats</h2>
+
+<div id="screen">Screen</div>
+
+<div id="seats-container">
+    <!-- Seats will be loaded dynamically here -->
+</div>
+
+<div id="seatContainer">
+    <h3>Selected Seats:</h3>
+    <ul id="selectedSeats"></ul>
+    <div id="totalPrice"></div>
+    <button id="book-button" onclick="bookSeats()">Book Selected Seats</button>
+</div>
     <script>
         // Replace the movie ID with your actual movie ID
         var movieId = <?php echo $movieId; ?>;

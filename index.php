@@ -11,22 +11,7 @@ include("session.php");
 </head>
 <body>
 
-<h2>Theater Movies</h2>
 
-<div id="movies-container">
-    <div class="category" id="now-showing">
-        <h3>Now Showing</h3>
-        <!-- Movies now showing will be loaded here -->
-    </div>
-    <div class="category" id="next-change">
-        <h3>Next Change</h3>
-        <!-- Movies for the next change will be loaded here -->
-    </div>
-    <div class="category" id="coming-soon">
-        <h3>Coming Soon</h3>
-        <!-- Upcoming movies will be loaded here -->
-    </div>
-</div>
 <nav class="bg-gray-800 pt-2 md:pt-1 pb-1 px-1 mt-0 h-auto fixed w-full z-20 top-0">
 
         <div class="flex flex-wrap items-center">
@@ -112,6 +97,22 @@ include("session.php");
                 </div>
             </div>
     <div>
+    <h2>Theater Movies</h2>
+
+<div id="movies-container">
+    <div class="category" id="now-showing">
+        <h3>Now Showing</h3>
+        <!-- Movies now showing will be loaded here -->
+    </div>
+    <div class="category" id="next-change">
+        <h3>Next Change</h3>
+        <!-- Movies for the next change will be loaded here -->
+    </div>
+    <div class="category" id="coming-soon">
+        <h3>Coming Soon</h3>
+        <!-- Upcoming movies will be loaded here -->
+    </div>
+</div>
 <script>
 document.addEventListener("DOMContentLoaded", function() {
     const moviesContainer = document.getElementById("movies-container");
