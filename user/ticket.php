@@ -50,7 +50,7 @@ function generatePDF($title, $data) {
 
 
 require_once('../config.php'); // Include your database connection file
-$userId = $_SESSION['user_id']; // Replace with the actual user ID
+$userId = $_SESSION['id']; // Replace with the actual user ID
 
 // Call the function to get data from the database
 $showDetailsPaid = getprintticket($userId, $book_seat);
