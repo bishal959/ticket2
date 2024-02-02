@@ -131,7 +131,7 @@ $showDetails = getpaidShowDetailsByUserId($userId);
         $tamount = $booking['unit_price'];
         $productId = generateRandomProductCode();
         $printticket = "http://localhost/k/user/ticket.php?booked_seat=" . urlencode($booking['quantity']);
-        $initiatePaymentForm = $esewa->initiatePayment("$amount", "$tamount", "$productId", "$Sucessurl", "http://localhost/failed.php");
+        
         
         echo '<tr class="border-b">';
         echo '<td class="py-2 px-4">' . $booking['movie_title'] . '</td>';

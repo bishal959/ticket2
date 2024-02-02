@@ -3,7 +3,7 @@ require('fpdf/fpdf.php');
 require('../function.php');
 session_start();
 $book_seat = isset($_GET['booked_seat']) ? $_GET['booked_seat'] : '';
-
+echo $book_seat;
 function generatePDF($title, $data) {
     // Create instance of FPDF class
     $pdf = new FPDF();
@@ -51,7 +51,7 @@ require_once('../config.php'); // Include your database connection file
 $userId = $_SESSION['user_id']; // Replace with the actual user ID
 
 // Call the function to get data from the database
-$showDetailsPaid = printticket($userId, $book_seat);
+$showDetailsPaid = getprintticket($userId, $book_seat);
 
 // Check if there are results before generating the PDF
 if (!empty($showDetailsPaid)) {

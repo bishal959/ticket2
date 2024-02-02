@@ -112,9 +112,9 @@ function getpaidShowDetailsByUserId($userId) {
         return [];
     }
 }
-function printticket($userId, $book_seat) {
+function getprintticket($userId, $book_seat) {
     global $conn;
-    $book_seat='1B';
+   
 
     try {
         // Select relevant columns from the bookings table and join with the movies table
@@ -130,7 +130,7 @@ function printticket($userId, $book_seat) {
             throw new Exception("Prepare failed: (" . $conn->errno . ") " . $conn->error);
         }
 
-        $stmt->bind_param("i,i", $userId, $book_seat);
+        $stmt->bind_param("i,is", $userId, $book_seat);
 
         if (!$stmt->execute()) {
             throw new Exception("Execute failed: (" . $stmt->errno . ") " . $stmt->error);

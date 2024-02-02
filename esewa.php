@@ -79,7 +79,7 @@ $productId = generateRandomProductCode();
 
 
 
-$Sucessurl="http://localhost/k/sucess.php";
+// $Sucessurl="http://localhost/k/sucess.php";
 // Usage example
 $esewa = new Esewa();
 
