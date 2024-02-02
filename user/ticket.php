@@ -52,6 +52,7 @@ $userId = $_SESSION['user_id']; // Replace with the actual user ID
 
 // Call the function to get data from the database
 $showDetailsPaid = getprintticket($userId, $book_seat);
+echo $showDetailsPaid;
 
 // Check if there are results before generating the PDF
 if (!empty($showDetailsPaid)) {
