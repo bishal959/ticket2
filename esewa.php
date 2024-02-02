@@ -1,6 +1,7 @@
 <?php
+include("session.php");
 class Esewa {
-    public function initiatePayment($amount,$tamount, $productId, $successUrl, $failedUrl) {
+    public function initiatePayment($amount, $tamount, $productId, $successUrl, $failedUrl) {
         $html = '
         <body>
         <form action="https://uat.esewa.com.np/epay/main" method="POST">
@@ -20,48 +21,70 @@ class Esewa {
         return $html;
     }
 
-    public function verifyPayment($amount, $productId, $receiptId) {
-        $html = '
-        <body>
-        <form action="https://uat.esewa.com.np/epay/transrec" method="GET">
-            <input value="' . $amount . '" name="amt" type="hidden">
-            <input value="EPAYTEST" name="scd" type="hidden">
-            <input value="' . $productId . '" name="pid" type="hidden">
-            <input value="' . $receiptId . '" name="rid" type="hidden">
-            <input value="Submit" type="submit">
-        </form>
-        </body>
-        ';
-        return $html;
+    public function verifyPayment($amount, $oid, $refId) {
+        $url = 'https://uat.esewa.com.np/epay/transrec';
+        $queryString = http_build_query([
+            'amt' => $amount,
+            'scd' => 'EPAYTEST',
+            'pid' => $oid,
+            'rid' => $refId,
+        ]);
+    
+        $url .= '?' . $queryString;
+    
+        // Perform verification using cURL or any other method you prefer
+        $verificationResult = $this->sendCurlRequest($url);
+    
+        // You can process the verification result as needed
+        return $verificationResult;
     }
+    
+    private function sendCurlRequest($url) {
+        $ch = curl_init();
+    
+        $options = [
+            CURLOPT_URL => $url,
+            CURLOPT_RETURNTRANSFER => true,
+        ];
+    
+        curl_setopt_array($ch, $options);
+    
+        $response = curl_exec($ch);
+    
+        if (curl_errno($ch) !== 0) {
+            // Handle cURL errors here
+            throw new Exception(curl_error($ch));
+        }
+    
+        curl_close($ch);
+    
+        return $response;
+    }
+    
 }
+
 function generateRandomProductCode() {
     $characters = '0123456789';
     $code = '';
-    
+
     for ($i = 0; $i < 6; $i++) {
         $code .= $characters[rand(0, strlen($characters) - 1)];
     }
-    
+
     return $code;
 }
 
 // Generate a random product code
 $productId = generateRandomProductCode();
-$receiptId="000AE01";
 
-// echo $productId;
+
+
 $Sucessurl="http://localhost/k/sucess.php";
-$tamount="100";
-$amount="100";
-
-
 // Usage example
 $esewa = new Esewa();
-$initiatePaymentForm = $esewa->initiatePayment("$amount","$tamount", "$productId", "$Sucessurl", "http://localhost/failed.php");
-$verifyPaymentForm = $esewa->verifyPayment(100, "705571","0006AGQ" );
+
+$verifyPaymentForm = $esewa->verifyPayment(100, "705571", "0006AGQ");
 
 // echo $initiatePaymentForm;
-// echo $verifyPaymentForm;
 
 ?>

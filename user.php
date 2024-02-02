@@ -1,8 +1,7 @@
 <?php
 session_start();
 include("function.php");
-include("config.php");
-// include("esewa.php");
+include("session.php");
 $userId=$_SESSION['user_id'];
 $showDetails = getShowDetailsByUserId($userId);
 
@@ -113,13 +112,14 @@ $showDetails = getShowDetailsByUserId($userId);
     <tbody>
     <?php
     $esewa = new Esewa(); // Assuming Esewa class is defined somewhere
-
+    
     foreach ($showDetails as $booking) {
-        $amount = $booking['total_price'];
-        $tamount = $booking['total_price'];
+        $amount = $booking['unit_price'];
+        $tamount = $booking['unit_price'];
         $productId = generateRandomProductCode();
+        $Sucessurl = "http://localhost\k\user\ticket.php?booked_seat" . urlencode($booking['quantity']);
         $initiatePaymentForm = $esewa->initiatePayment("$amount", "$tamount", "$productId", "$Sucessurl", "http://localhost/failed.php");
-
+        
         echo '<tr class="border-b">';
         echo '<td class="py-2 px-4">' . $booking['movie_title'] . '</td>';
         echo '<td class="py-2 px-4">' . $booking['show_date'] . '</td>';

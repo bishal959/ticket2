@@ -1,10 +1,11 @@
 <?php
+include("session.php");
 session_start();
 include("function.php");
 include("config.php");
 // include("esewa.php");
 $userId=$_SESSION['user_id'];
-$showDetails = getShowDetailsByUserId($userId);
+$showDetails = getpaidShowDetailsByUserId($userId);
 
 ?>
 <!DOCTYPE html>
@@ -111,6 +112,40 @@ $showDetails = getShowDetailsByUserId($userId);
                 </div>
             </div>
     <div>
+    <table class="w-full border-collapse border border-gray-300">
+    <thead>
+        <tr class="bg-gray-100">
+            <th class="py-3 px-4 pr-24 border-b">Show Details</th>
+            <th class="py-3 px-4 pr-24  border-b">Date</th>
+            <th class="py-3  pr-24  border-b">Seats</th>
+            <th class="py-3 px-4 pr-24  border-b">Price</th>
+            <th class="py-3 px-4 pr-24  border-b">Click to Pay</th>
+        </tr>
+    </thead>
+    <tbody>
+    <?php
+    $esewa = new Esewa(); // Assuming Esewa class is defined somewhere
+    
+    foreach ($showDetails as $booking) {
+        $amount = $booking['unit_price'];
+        $tamount = $booking['unit_price'];
+        $productId = generateRandomProductCode();
+        $printticket = "http://localhost/k/user/ticket.php?booked_seat=" . urlencode($booking['quantity']);
+        $initiatePaymentForm = $esewa->initiatePayment("$amount", "$tamount", "$productId", "$Sucessurl", "http://localhost/failed.php");
+        
+        echo '<tr class="border-b">';
+        echo '<td class="py-2 px-4">' . $booking['movie_title'] . '</td>';
+        echo '<td class="py-2 px-4">' . $booking['show_date'] . '</td>';
+        echo '<td class="py-2 px-3">' . $booking['quantity'] . '</td>';
+        echo '<td class="py-2 px-4">Rs.' . number_format($booking['unit_price'], 2) . '</td>';
+        echo '<td class="py-2 px-4"><a href="http://localhost/k/user/ticket.php?booked_seat=' . urlencode($booking['quantity']) . '" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Print Ticket</a> </td>';
+        echo '</tr>';
+        
+
+    }
+    ?>
+</tbody>
+</table>
     <script>
         /*Toggle dropdown list*/
         function toggleDD(myDropMenu) {

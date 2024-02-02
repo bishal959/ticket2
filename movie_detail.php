@@ -1,5 +1,6 @@
 <?php
 include('config.php');
+include("session.php");
 // Include your database connection file
 session_start();
 $username = $_SESSION["username"];
