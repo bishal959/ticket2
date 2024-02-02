@@ -82,12 +82,12 @@ $showDetails = getShowDetailsByUserId($userId);
                 <ul class="list-reset flex flex-row md:flex-col py-0 md:py-3 px-1 md:px-2 text-center md:text-left">
                     
                     <li class="mr-3 flex-1">
-                        <a href="user.php" class="block py-1 md:py-3 pl-1 align-middle text-white no-underline hover:text-white border-b-2 border-gray-800 border-purple-600">
+                        <a href="user.php" class="block py-1 md:py-3 pl-1 align-middle text-white no-underline hover:text-white border-b-2 border-gray-800 hover:border-purple-600">
                             <i class="fa fa-home pr-0 md:pr-3"></i><span class="pb-1 md:pb-0 text-xs md:text-base text-gray-600 md:text-gray-400 block md:inline-block">My Reservation</span>
                         </a>
                     </li>
                     <li class="mr-3 flex-1">
-                        <a href="ticket.php" class="block py-1 md:py-3 pl-1 align-middle text-white no-underline hover:text-white border-b-2 border-gray-800 hover:border-pink-500">
+                        <a href="ticket.php" class="block py-1 md:py-3 pl-1 align-middle text-white no-underline hover:text-white border-b-2 border-gray-800 border-pink-500">
                             <i class="fa fa-ticket-alt pr-0 md:pr-3"></i><span class="pb-1 md:pb-0 text-xs md:text-base text-gray-600 md:text-gray-400 block md:inline-block">Tickets</span>
                         </a>
                     </li>
@@ -106,52 +106,11 @@ $showDetails = getShowDetailsByUserId($userId);
 
             <div class="bg-gray-800 pt-3">
                 <div class="rounded-tl-3xl bg-gradient-to-r from-purple-900 to-gray-800 p-4 shadow text-2xl text-white">
-                    <h3 class="font-bold pl-2">Reserve ticket</h3>
+                    <h3 class="font-bold pl-2">My ticket</h3>
+                    <i class="fa-solid fa-ticket"></i>
                 </div>
             </div>
     <div>
-    <div class="max-w-5xl mx-1  rounded ">
-<table class="w-full border-collapse border border-gray-300">
-    <thead>
-        <tr class="bg-gray-100">
-            <th class="py-3 px-4 pr-24 border-b">Show Details</th>
-            <th class="py-3 px-4 pr-24  border-b">Date</th>
-            <th class="py-3  pr-24  border-b">Seats</th>
-            <th class="py-3 px-4 pr-24  border-b">Price</th>
-            <th class="py-3 px-4 pr-24  border-b">Click to Pay</th>
-        </tr>
-    </thead>
-    <tbody>
-    <?php
-    $esewa = new Esewa(); // Assuming Esewa class is defined somewhere
-
-    foreach ($showDetails as $booking) {
-        $amount = $booking['total_price'];
-        $tamount = $booking['total_price'];
-        $productId = generateRandomProductCode();
-        $initiatePaymentForm = $esewa->initiatePayment("$amount", "$tamount", "$productId", "$Sucessurl", "http://localhost/failed.php");
-
-        echo '<tr class="border-b">';
-        echo '<td class="py-2 px-4">' . $booking['movie_title'] . '</td>';
-        echo '<td class="py-2 px-4">' . $booking['show_date'] . '</td>';
-        echo '<td class="py-2 px-3">' . $booking['quantity'] . '</td>';
-        echo '<td class="py-2 px-4">Rs.' . number_format($booking['unit_price'], 2) . '</td>';
-        echo '<td class="py-2 px-4"><button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">' . $initiatePaymentForm . '</button></td>';
-        echo '</tr>';
-    }
-    ?>
-</tbody>
-</table>
-
-
-
-
-        <!-- Additional Information or Actions -->
-        <div class="mt-4">
-            <p class="text-gray-600">Note: <span class="text-black font-semibold">Enjoy the movie!</span></p>
-            <!-- You can add additional information or actions here -->
-        </div>
-    </div>
     <script>
         /*Toggle dropdown list*/
         function toggleDD(myDropMenu) {

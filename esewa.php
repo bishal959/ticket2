@@ -13,7 +13,7 @@ class Esewa {
             <input value="' . $productId . '" name="pid" type="hidden">
             <input value="' . $successUrl . '" type="hidden" name="su">
             <input value="' . $failedUrl . '" type="hidden" name="fu">
-            <input value="Submit" type="submit">
+            <input value="Pay Now" style="cursor: pointer;"  type="submit">
         </form>
         </body>
         ';
@@ -50,8 +50,8 @@ function generateRandomProductCode() {
 $productId = generateRandomProductCode();
 $receiptId="000AE01";
 
-echo $productId;
-$Sucessurl="https://localhost:3000/index.php";
+// echo $productId;
+$Sucessurl="http://localhost/k/sucess.php";
 $tamount="100";
 $amount="100";
 
@@ -61,7 +61,7 @@ $esewa = new Esewa();
 $initiatePaymentForm = $esewa->initiatePayment("$amount","$tamount", "$productId", "$Sucessurl", "http://localhost/failed.php");
 $verifyPaymentForm = $esewa->verifyPayment(100, "705571","0006AGQ" );
 
-echo $initiatePaymentForm;
-echo $verifyPaymentForm;
+// echo $initiatePaymentForm;
+// echo $verifyPaymentForm;
 
 ?>
