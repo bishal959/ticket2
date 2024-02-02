@@ -2,7 +2,7 @@
 
 // $servername = "localhost";
 // $username = "root";
-// $password = "";
+$password = "";
 // $dbname = "movie";
 $servername = "sql108.infinityfree.com";
 $username = "epiz_34107324";
