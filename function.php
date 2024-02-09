@@ -1,7 +1,7 @@
 <?php
 include("config.php");
 include("esewa.php");
-include("session.php");
+
 
 function getShowDetailsByUserId($userId) {
     global $conn;

@@ -1,7 +1,7 @@
 <?php
 session_start();
 include('config.php');
-include("session.php");
+
 // Include your database connection file
 
 $username = $_SESSION["username"];
