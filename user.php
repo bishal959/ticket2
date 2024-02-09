@@ -1,5 +1,4 @@
 <?php
-session_start();
 include("function.php");
 include("session.php");
 $userId=$_SESSION['user_id'];

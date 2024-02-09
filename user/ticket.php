@@ -1,68 +1,60 @@
 <?php
-require('fpdf/fpdf.php');
-require('../function.php');
+require_once('tcpdf/tcpdf.php');
+$seat = isset($_GET['booked_seat']) ? $_GET['booked_seat'] : '';
+include("../function.php");
 session_start();
-$book_seat = isset($_GET['booked_seat']) ? $_GET['booked_seat'] : '';
+$userId = $_SESSION['user_id'];
 
-// Output for debugging
-echo $book_seat;
-function generatePDF($title, $data) {
-    // Create instance of FPDF class
-    $pdf = new FPDF();
+$showDetails = printticket($userId, $seat);
 
-    // Add a page to the PDF
-    $pdf->AddPage();
-
-    // Set font
-    $pdf->SetFont('Arial', 'B', 13);
-
-    // Add title to the PDF with background color
-    $pdf->SetFillColor(150, 200, 205);
-    $pdf->Cell(0, 6, $title, 0, 1, 'C', true);
-
-    // Set font for the table header
-    $pdf->SetFont('Arial', 'B', 11);
-
-    // Add table headers to the PDF with background color
-    $pdf->SetFillColor(100, 180, 200);
-    $pdf->Cell(40, 10, 'Movie Title', 1, 0, 'C', true);
-    $pdf->Cell(30, 10, 'Show Date', 1, 0, 'C', true);
-    $pdf->Cell(30, 10, 'seats', 1, 0, 'C', true);
-    $pdf->Cell(30, 10, 'Price', 1, 0, 'C', true);
-    $pdf->Cell(40, 10, 'Total Price', 1, 1, 'C', true);
-
-    // Set font for the table content
-    $pdf->SetFont('Arial', '', 12);
-
-    // Add data to the PDF
-    foreach ($data as $row) {
-        $pdf->Cell(40, 10, $row['movie_title'], 1);
-        $pdf->Cell(30, 10, $row['show_date'], 1);
-        $pdf->Cell(30, 10, $row['quantity'], 1);
-        $pdf->Cell(30, 10, $row['unit_price'], 1);
-        $pdf->Cell(40, 10, $row['total_price'], 1);
-        $pdf->Ln();
+class PDF extends TCPDF {
+    public function ticket($showDate, $showTime, $movieName, $auditorium, $seat) {
+        $html = "
+        <div style='width: 45%; float: left; margin-right: 5%; text-align: center; margin-bottom: 20px;'>
+            <h1 style='font-size: 1.5em; margin-bottom: 10px;'>Bishal cinema City Pvt. Ltd</h1>
+            <p style='font-size: 0.8em; margin-bottom: 10px;'>Gp Road, Chabahil</p>
+            <div style='font-size: 0.8em; margin-bottom: 10px;'>
+                <strong>Show Date:</strong> $showDate<br><br>
+                <strong>Show Time:</strong> $showTime<br><br>
+                <strong>Movie Name:</strong> $movieName<br><br>
+                <strong>Auditorium:</strong> $auditorium
+                <span style='float: right;'><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Seat:</strong> $seat</span>
+            </div>
+            <hr style='border-top: 1px solid #000;'>
+            <p style='font-size: 0.8em; '>Thank you for booking with us.</p>
+            <hr style='border-top: 1px solid #000;'>
+        </div><br><br><br><br><br><br>";
+        $this->writeHTML($html, true, false, true, false, '');
     }
-
-    // Output the PDF to the browser or save it to a file
-    $pdf->Output();
 }
 
+$pdf = new PDF();
+$pdf->AddPage();
 
-require_once('../config.php'); // Include your database connection file
-$userId = $_SESSION['id']; // Replace with the actual user ID
+foreach ($showDetails as $booking) {
+    $title = $booking['movie_title'];
+    $date = $booking['show_date'];
+    $time = "11:00";
+    $quantity = $booking['quantity'];
 
-// Call the function to get data from the database
-$showDetailsPaid = getprintticket($userId, $book_seat);
+    // Check the value of $seat and decide whether to print one or all seats
+    if ($seat == 1) {
+        $pdf->ticket($date, $time, $title, 'Auditorium 1', $seat);
+    } else {
+        // Split the seat string into an array
+        $yourSeatArray = explode(',', $seat);
 
-// Output for debugging
-print_r($showDetailsPaid);
-
-// Check if there are results before generating the PDF
-if (!empty($showDetailsPaid)) {
-    $title = " Show Details  ";
-    generatePDF($title, $showDetailsPaid);
-} else {
-    echo "No paid show details found for the user.";
+        // Check if $yourSeatArray is an array before using foreach
+        if (is_array($yourSeatArray)) {
+            foreach ($yourSeatArray as $singleSeat) {
+                $pdf->ticket($date, $time, $title, 'Auditorium 1', $singleSeat);
+            }
+        } else {
+            // Handle the case where $yourSeatArray is not an array
+            echo "Error: Seat data is not available.";
+        }
+    }
 }
+
+$pdf->Output();
 ?>

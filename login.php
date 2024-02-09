@@ -41,7 +41,7 @@
 
 <form action="login_process.php" method="post">
     <h2>User Login</h2>
-    <label for="username">Username or Email:</label>
+    <label for="username">Username :</label>
     <input type="text" id="username" name="username" required>
 
     <label for="password">Password:</label>

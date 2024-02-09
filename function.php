@@ -1,7 +1,7 @@
 <?php
 include("config.php");
 include("esewa.php");
-include("session.php");
+
 
 function getShowDetailsByUserId($userId) {
     global $conn;
@@ -73,7 +73,8 @@ function updatetopaid($book_seat)
         return false;
     }
 }
-function getpaidShowDetailsByUserId($userId) {
+
+function printticket($userId, $book_seat) {
     global $conn;
 
     try {
@@ -81,7 +82,7 @@ function getpaidShowDetailsByUserId($userId) {
         $query = "SELECT movies.title AS movie_title, bookings.show_date, bookings.booked_seats AS quantity, bookings.price AS unit_price, (bookings.price * COUNT(bookings.id)) AS total_price
                   FROM bookings
                   INNER JOIN movies ON bookings.movie_id = movies.id
-                  WHERE bookings.user_id = ? and bookings.book_type = 'paid'
+                  WHERE bookings.user_id = ? and bookings.book_type = 'paid' and bookings.booked_seats = ?
                   GROUP BY movies.title, bookings.show_date, bookings.price";
 
         $stmt = $conn->prepare($query);
@@ -90,7 +91,7 @@ function getpaidShowDetailsByUserId($userId) {
             throw new Exception("Prepare failed: (" . $conn->errno . ") " . $conn->error);
         }
 
-        $stmt->bind_param("i", $userId);
+        $stmt->bind_param("is", $userId, $book_seat);
 
         if (!$stmt->execute()) {
             throw new Exception("Execute failed: (" . $stmt->errno . ") " . $stmt->error);
@@ -107,52 +108,6 @@ function getpaidShowDetailsByUserId($userId) {
         $stmt->close();
 
         return $showDetailspaid;
-    } catch (Exception $e) {
-        echo "Error: " . $e->getMessage();
-        return [];
-    }
-}
-function getprintticket($userId, $book_seat) {
-    global $conn;
-
-    try {
-        // Select relevant columns from the bookings table and join with the movies table
-        $query = "SELECT movies.title AS movie_title, bookings.show_date, bookings.booked_seats AS quantity, bookings.price AS unit_price, (bookings.price * COUNT(bookings.id)) AS total_price
-                  FROM bookings
-                  INNER JOIN movies ON bookings.movie_id = movies.id
-                  WHERE bookings.user_id = ? and bookings.book_type = 'paid' and bookings.booked_seats IN (?, ?, ?)
-                  GROUP BY movies.title, bookings.show_date, bookings.price";
-
-        $stmt = $conn->prepare($query);
-
-        if (!$stmt) {
-            throw new Exception("Prepare failed: (" . $conn->errno . ") " . $conn->error);
-        }
-
-        // Dynamically bind the parameters
-        $params = explode(',', $book_seat);
-        $placeholders = str_repeat('?,', count($params));
-        $placeholders = rtrim($placeholders, ',');
-        $types = str_repeat('s', count($params) + 1);  // One more placeholder for $userId
-        array_unshift($params, $userId);
-
-        $stmt->bind_param($types, ...$params);
-
-        if (!$stmt->execute()) {
-            throw new Exception("Execute failed: (" . $stmt->errno . ") " . $stmt->error);
-        }
-
-        $result = $stmt->get_result();
-
-        // Fetch the results into an associative array
-        $showticket = [];
-        while ($row = $result->fetch_assoc()) {
-            $showticket[] = $row;
-        }
-
-        $stmt->close();
-
-        return $showticket;
     } catch (Exception $e) {
         echo "Error: " . $e->getMessage();
         return [];
