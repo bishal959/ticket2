@@ -1,5 +1,5 @@
 <?php
-include("session.php");
+session_start();
 include("function.php");
 include("config.php");
 include("esewa.php");

@@ -1,5 +1,5 @@
 <?php
-include("session.php");
+
 class Esewa {
     public function initiatePayment($amount, $tamount, $productId, $successUrl, $failedUrl) {
         $html = '
