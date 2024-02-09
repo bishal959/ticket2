@@ -4,8 +4,8 @@ include("function.php");
 include("config.php");
 include("esewa.php");
 $userId=$_SESSION['user_id'];
-echo $userId;
-$showDetails = getpaidShowDetailsByUserId($userId);
+echo
+
 
 ?>
 <!DOCTYPE html>
@@ -131,7 +131,7 @@ $showDetails = getpaidShowDetailsByUserId($userId);
         $tamount = $booking['unit_price'];
         $productId = generateRandomProductCode();
         
-        
+        $showDetails = getpaidShowDetailsByUserId($userId);
         
         echo '<tr class="border-b">';
         echo '<td class="py-2 px-4">' . $booking['movie_title'] . '</td>';
