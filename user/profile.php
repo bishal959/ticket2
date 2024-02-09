@@ -1,8 +1,6 @@
 <?php
+include("../session.php");
 
-if ($_SESSION !=="null") {
-    header("Location: ../login.php");
-}
 
 ?>
 

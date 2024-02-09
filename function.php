@@ -1,6 +1,7 @@
 <?php
+include("session.php");
 include("config.php");
-include("esewa.php");
+
 
 
 function getShowDetailsByUserId($userId) {

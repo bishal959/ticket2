@@ -1,6 +1,7 @@
 <?php
-include('config.php');
 include("session.php");
+include('config.php');
+
 
 $query = "SELECT id, title, release_date, genre, runTime, director, cast, image_url FROM movies";
 $result = $conn->query($query);
