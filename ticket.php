@@ -4,7 +4,7 @@ include("function.php");
 include("config.php");
 include("esewa.php");
 $userId=$_SESSION['user_id'];
-echo
+
 
 
 ?>
