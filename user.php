@@ -113,7 +113,7 @@ $showDetails = getShowDetailsByUserId($userId);
     <tbody>
     <?php
     $esewa = new Esewa(); // Assuming Esewa class is defined somewhere
-    
+    $showDetails = getpaidShowDetailsByUserId($userId);
     foreach ($showDetails as $booking) {
         $amount = $booking['unit_price'];
         $tamount = $booking['unit_price'];
