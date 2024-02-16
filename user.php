@@ -1,6 +1,7 @@
 <?php
 session_start();
 include("function.php");
+
 $userId=$_SESSION['user_id'];
 $showDetails = getShowDetailsByUserId($userId);
 
@@ -112,22 +113,30 @@ $showDetails = getShowDetailsByUserId($userId);
     </thead>
     <tbody>
     <?php
+
+    $esewa = new Esewa();
+    // $khalti = new Khalti(); // Assuming Esewa class is defined somewhere
+   
+
     $esewa = new Esewa(); // Assuming Esewa class is defined somewhere
     $showDetails = getpaidShowDetailsByUserId($userId);
     echo $showDetails;
+
     foreach ($showDetails as $booking) {
         $amount = $booking['unit_price'];
         $tamount = $booking['unit_price'];
         $productId = generateRandomProductCode();
-        $Sucessurl = "http://bibekluitel.rf.gd\sucess.php?booked_seat=" . urlencode($booking['quantity']);
+        $Sucessurl = "http://localhost\k\sucess.php?booked_seat=" . urlencode($booking['quantity']);
         $initiatePaymentForm = $esewa->initiatePayment("$amount", "$tamount", "$productId", "$Sucessurl", "http://localhost/failed.php");
-        
+        // $initiatePaymentkhalti = $khalti->initiatePayment("$tamount", "$productId" );
+
         echo '<tr class="border-b">';
         echo '<td class="py-2 px-4">' . $booking['movie_title'] . '</td>';
         echo '<td class="py-2 px-4">' . $booking['show_date'] . '</td>';
         echo '<td class="py-2 px-3">' . $booking['quantity'] . '</td>';
         echo '<td class="py-2 px-4">Rs.' . number_format($booking['unit_price'], 2) . '</td>';
         echo '<td class="py-2 px-4"><button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">' . $initiatePaymentForm . '</button></td>';
+        // echo '<td class="py-2 px-4"><button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">' . $initiatePaymentkhalti . '</button></td>';
         echo '</tr>';
     }
     ?>

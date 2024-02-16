@@ -5,6 +5,7 @@ include("config.php");
 include("esewa.php");
 $userId=$_SESSION['user_id'];
 
+$showDetails=getpaidShowDetailsByUserId($userId);
 
 
 ?>

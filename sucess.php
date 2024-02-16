@@ -3,7 +3,7 @@ session_start();
 
 include("config.php");
 include("function.php");
-include("session.php");
+
 
 // Enable error reporting
 error_reporting(E_ALL);
