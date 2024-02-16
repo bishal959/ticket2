@@ -73,7 +73,45 @@ function updatetopaid($book_seat)
         return false;
     }
 }
+function getpaidShowDetailsByUserId($userId) {
+    global $conn;
 
+    try {
+        // Select relevant columns from the bookings table and join with the movies table
+        $query = "SELECT movies.title AS movie_title, bookings.show_date, bookings.booked_seats AS quantity, bookings.price AS unit_price, (bookings.price * COUNT(bookings.id)) AS total_price
+                  FROM bookings
+                  INNER JOIN movies ON bookings.movie_id = movies.id
+                  WHERE bookings.user_id = ? and bookings.book_type = 'paid'
+                  GROUP BY movies.title, bookings.show_date, bookings.price";
+
+        $stmt = $conn->prepare($query);
+
+        if (!$stmt) {
+            throw new Exception("Prepare failed: (" . $conn->errno . ") " . $conn->error);
+        }
+
+        $stmt->bind_param("i", $userId);
+
+        if (!$stmt->execute()) {
+            throw new Exception("Execute failed: (" . $stmt->errno . ") " . $stmt->error);
+        }
+
+        $result = $stmt->get_result();
+
+        // Fetch the results into an associative array
+        $showDetailspaid = [];
+        while ($row = $result->fetch_assoc()) {
+            $showDetailspaid[] = $row;
+        }
+
+        $stmt->close();
+
+        return $showDetailspaid;
+    } catch (Exception $e) {
+        echo "Error: " . $e->getMessage();
+        return [];
+    }
+}
 function printticket($userId, $book_seat) {
     global $conn;
 

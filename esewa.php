@@ -1,5 +1,5 @@
 <?php
-include("session.php");
+
 class Esewa {
     public function initiatePayment($amount, $tamount, $productId, $successUrl, $failedUrl) {
         $html = '
@@ -19,50 +19,8 @@ class Esewa {
         </body>
         ';
         return $html;
-    }
-
-    public function verifyPayment($amount, $oid, $refId) {
-        $url = 'https://uat.esewa.com.np/epay/transrec';
-        $queryString = http_build_query([
-            'amt' => $amount,
-            'scd' => 'EPAYTEST',
-            'pid' => $oid,
-            'rid' => $refId,
-        ]);
-    
-        $url .= '?' . $queryString;
-    
-        // Perform verification using cURL or any other method you prefer
-        $verificationResult = $this->sendCurlRequest($url);
-    
-        // You can process the verification result as needed
-        return $verificationResult;
-    }
-    
-    private function sendCurlRequest($url) {
-        $ch = curl_init();
-    
-        $options = [
-            CURLOPT_URL => $url,
-            CURLOPT_RETURNTRANSFER => true,
-        ];
-    
-        curl_setopt_array($ch, $options);
-    
-        $response = curl_exec($ch);
-    
-        if (curl_errno($ch) !== 0) {
-            // Handle cURL errors here
-            throw new Exception(curl_error($ch));
-        }
-    
-        curl_close($ch);
-    
-        return $response;
-    }
-    
+    } 
 }
-
 function generateRandomProductCode() {
     $characters = '0123456789';
     $code = '';
@@ -73,18 +31,67 @@ function generateRandomProductCode() {
 
     return $code;
 }
+class khalti {
+    public function initiatePayment($productId, $tamount) {
+        $apiUrl = 'https://khalti.com/api/v2/epayment/initiate/';
+        $apiKey = 'live_secret_key_5e65c902d19a4d6c9b74763a669b83e1';
+    
+        $payload = array(
+            "return_url" => "https://example.com",
+            "website_url" => "https://example.com",
+            "amount" => $tamount,
+            "purchase_order_id" => $productId,
+            "purchase_order_name" => "ticket",
+            "customer_info" => array(
+                "name" => "test",
+                "email" => "test@khalti.com",
+                "phone" => "9800000001"
+            )
+        );
+    
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => $apiUrl,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => json_encode($payload),
+            CURLOPT_HTTPHEADER => array(
+                'Authorization: key ' . $apiKey,
+                'Content-Type: application/json',
+            ),
+        ));
+    
+        $response = curl_exec($curl);
+    
+        if ($response === false) {
+            // Handle cURL error
+            echo "cURL Error: " . curl_error($curl);
+        } else {
+            // Decode JSON response
+            $responseData = json_decode($response, true);
+    
+            // Check if payment_url is present in the response
+            if (isset($responseData['payment_url'])) {
+                // Redirect user to the payment URL
+                header("Location: " . $responseData['payment_url']);
+                exit();
+            } else {
+                // Handle other cases or display an error message
+                echo "Payment URL not found in the response.";
+            }
+        }
+    
+        curl_close($curl);
+    }
+}    
 
-// Generate a random product code
 $productId = generateRandomProductCode();
 
 
-
-// $Sucessurl="http://localhost/k/sucess.php";
-// Usage example
-$esewa = new Esewa();
-
-$verifyPaymentForm = $esewa->verifyPayment(100, "705571", "0006AGQ");
-
-// echo $initiatePaymentForm;
 
 ?>

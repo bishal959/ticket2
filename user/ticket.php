@@ -1,8 +1,9 @@
 <?php
+session_start();
 require_once('tcpdf/tcpdf.php');
 $seat = isset($_GET['booked_seat']) ? $_GET['booked_seat'] : '';
 include("../function.php");
-session_start();
+
 $userId = $_SESSION['user_id'];
 
 $showDetails = printticket($userId, $seat);
