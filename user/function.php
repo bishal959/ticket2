@@ -1,9 +1,6 @@
 <?php
 
 include("config.php");
-
-
-
 function getShowDetailsByUserId($userId) {
     global $conn;
 
@@ -12,7 +9,7 @@ function getShowDetailsByUserId($userId) {
         $query = "SELECT movies.title AS movie_title, bookings.show_date, bookings.booked_seats AS quantity, bookings.price AS unit_price, (bookings.price * COUNT(bookings.id)) AS total_price
                   FROM bookings
                   INNER JOIN movies ON bookings.movie_id = movies.id
-                  WHERE bookings.user_id = ? and bookings.book_type = 'Reserved'
+                  WHERE bookings.user_id = ? and bookings.book_type = 'reserved'
                   GROUP BY movies.title, bookings.show_date, bookings.price";
 
         $stmt = $conn->prepare($query);
@@ -30,14 +27,14 @@ function getShowDetailsByUserId($userId) {
         $result = $stmt->get_result();
 
         // Fetch the results into an associative array
-        $showDetails = [];
+        $showDetailspaid = [];
         while ($row = $result->fetch_assoc()) {
-            $showDetails[] = $row;
+            $showDetailspaid[] = $row;
         }
 
         $stmt->close();
 
-        return $showDetails;
+        return $showDetailspaid;
     } catch (Exception $e) {
         echo "Error: " . $e->getMessage();
         return [];

@@ -2,7 +2,6 @@
 session_start();
 include("function.php");
 include("esewa.php");
-
 $userId = $_SESSION['user_id'];
 $showDetails = getShowDetailsByUserId($userId);
 
@@ -16,8 +15,8 @@ $showDetails = getShowDetailsByUserId($userId);
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Welcome to the Student Dashboard</title>
 
-    <link rel="stylesheet" href="./styles/reset.css">
-    <link rel="stylesheet" href="./styles/user.css">
+    <link rel="stylesheet" href="../styles/reset.css">
+    <link rel="stylesheet" href="../styles/user.css">
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
 </head>
@@ -54,11 +53,12 @@ $showDetails = getShowDetailsByUserId($userId);
                 <tbody>
                     <?php
 
-                    $esewa = new Esewa();
+                   
 
 
                     $esewa = new Esewa(); // Assuming Esewa class is defined somewhere
-                    $showDetails = getpaidShowDetailsByUserId($userId);
+                    $showDetails = getShowDetailsByUserId($userId);
+                    
 
                     foreach ($showDetails as $booking) {
                         $amount = $booking['unit_price'];
@@ -76,6 +76,7 @@ $showDetails = getShowDetailsByUserId($userId);
                         echo '<td>' . $initiatePaymentForm . '</td>';
                         echo '</tr>';
                     }
+                    
                     ?>
                 </tbody>
             </table>

@@ -4,6 +4,7 @@ include("config.php");
 
  
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    session_start();
     $userId = $_SESSION["user_id"];
     $selectedSeats = json_decode($_POST["selectedSeats"]);
     $prices = json_decode($_POST["prices"]);

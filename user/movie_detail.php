@@ -41,8 +41,8 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Movie Detail</title>
-    <link rel="stylesheet" href="./styles/movie-detail.css">
-    <link rel="stylesheet" href="./styles/reset.css">
+    <link rel="stylesheet" href="../styles/movie-detail.css">
+    <link rel="stylesheet" href="../styles/reset.css">
 </head>
 
 <body>
@@ -199,7 +199,7 @@ $conn->close();
                 if (xhr.readyState === XMLHttpRequest.DONE) {
                     if (xhr.status === 200) {
                         console.log("Booking successful");
-                        window.location.href = "user.php";
+                        // window.location.href = "user.php";
                         // Add any additional logic or UI updates here
                     } else {
                         console.error("Error booking seats:", xhr.status, xhr.statusText);
