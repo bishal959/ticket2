@@ -1,3 +1,3 @@
 <?php
-include('env+session.php');
+header("Location: user/movie.php");
 ?>
