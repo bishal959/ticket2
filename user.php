@@ -1,6 +1,7 @@
 <?php
 session_start();
 include("function.php");
+include("esewa.php");
 
 $userId=$_SESSION['user_id'];
 $showDetails = getShowDetailsByUserId($userId);
@@ -120,7 +121,7 @@ $showDetails = getShowDetailsByUserId($userId);
 
     $esewa = new Esewa(); // Assuming Esewa class is defined somewhere
     $showDetails = getpaidShowDetailsByUserId($userId);
-    echo $showDetails;
+ 
 
     foreach ($showDetails as $booking) {
         $amount = $booking['unit_price'];
