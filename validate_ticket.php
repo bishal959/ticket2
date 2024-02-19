@@ -15,12 +15,14 @@ if (isValidToken($scannedToken)) {
 }
 
 // Functions to be implemented
-function extractToken($scannedData) {
+function extractToken($scannedData)
+{
     // Implement logic to extract the token from scanned data
     // You might decode the QR code or extract the token in another way
 }
 
-function isValidToken($token) {
+function isValidToken($token)
+{
     // Implement logic to check if the token exists in the tickets table
     // You may use prepared statements to prevent SQL injection
     $pdo = new PDO("mysql:host=localhost;dbname=your_database", "username", "password");

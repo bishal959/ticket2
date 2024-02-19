@@ -1,7 +1,9 @@
 <?php
 
-class Esewa {
-    public function initiatePayment($amount, $tamount, $productId, $successUrl, $failedUrl) {
+class Esewa
+{
+    public function initiatePayment($amount, $tamount, $productId, $successUrl, $failedUrl)
+    {
         $html = '
         <body>
         <form action="https://uat.esewa.com.np/epay/main" method="POST">
@@ -19,9 +21,10 @@ class Esewa {
         </body>
         ';
         return $html;
-    } 
+    }
 }
-function generateRandomProductCode() {
+function generateRandomProductCode()
+{
     $characters = '0123456789';
     $code = '';
 
@@ -31,11 +34,13 @@ function generateRandomProductCode() {
 
     return $code;
 }
-class khalti {
-    public function initiatePayment($productId, $tamount) {
+class khalti
+{
+    public function initiatePayment($productId, $tamount)
+    {
         $apiUrl = 'https://khalti.com/api/v2/epayment/initiate/';
         $apiKey = 'live_secret_key_5e65c902d19a4d6c9b74763a669b83e1';
-    
+
         $payload = array(
             "return_url" => "https://example.com",
             "website_url" => "https://example.com",
@@ -48,7 +53,7 @@ class khalti {
                 "phone" => "9800000001"
             )
         );
-    
+
         $curl = curl_init();
         curl_setopt_array($curl, array(
             CURLOPT_URL => $apiUrl,
@@ -64,17 +69,18 @@ class khalti {
                 'Authorization: key ' . $apiKey,
                 'Content-Type: application/json',
             ),
-        ));
-    
+        )
+        );
+
         $response = curl_exec($curl);
-    
+
         if ($response === false) {
             // Handle cURL error
             echo "cURL Error: " . curl_error($curl);
         } else {
             // Decode JSON response
             $responseData = json_decode($response, true);
-    
+
             // Check if payment_url is present in the response
             if (isset($responseData['payment_url'])) {
                 // Redirect user to the payment URL
@@ -85,10 +91,10 @@ class khalti {
                 echo "Payment URL not found in the response.";
             }
         }
-    
+
         curl_close($curl);
     }
-}    
+}
 
 $productId = generateRandomProductCode();
 

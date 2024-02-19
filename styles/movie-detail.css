@@ -1,0 +1,135 @@
+.seat {
+  width: 40px;
+  height: 40px;
+  margin: 5px;
+  background-color: #387a21;
+  color: white;
+
+  cursor: pointer;
+  border-radius: 5px;
+  align-items: center;
+  justify-content: center;
+  display: inline-flex;
+}
+.seat:hover {
+  opacity: 0.5;
+  transition: all 200ms ease 0s;
+}
+
+.unavailable {
+  background-color: #5a110c !important; /* Change to your desired color for unavailable seats */
+  cursor: not-allowed;
+}
+.Booked {
+  background-color: #f7bb2a;
+}
+.selected {
+  background-color: #5f95f3; /* Change to your desired color for selected seats */
+}
+
+.seats-wrapper {
+  max-width: fit-content;
+  margin-inline: auto;
+}
+
+#screen {
+  width: 500px;
+  height: 30px;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  margin-bottom: 10px;
+}
+#book-button {
+  display: block;
+  margin-top: 10px;
+  padding: 10px;
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/*  */
+
+.hero-section {
+  height: 90vh;
+  overflow: hidden;
+  width: 100%;
+
+  position: relative;
+  color: white;
+}
+
+.hero-section::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, #000000aa, #000000cc);
+}
+
+.hero-section .movie-poster {
+  width: 100%;
+}
+
+.hero-section .movie-details {
+  position: absolute;
+  right: 1%;
+  bottom: 0;
+  text-align: right;
+  z-index: 4;
+  max-width: 300px;
+
+  color: #eaeaea;
+}
+
+.hero-section .movie-title {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  z-index: 3;
+  font-size: clamp(2rem, -0.1rem + 9vw, 8rem);
+}
+
+.seat-details {
+  display: flex;
+  list-style: none;
+  max-width: 600px;
+  flex-wrap: wrap;
+  gap: 12px;
+
+  margin-block: 2rem;
+  margin-inline: auto;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.seat-details li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.seat-details li span {
+  display: block;
+  background-color: red;
+  height: 2rem;
+  aspect-ratio: 1;
+}
+
+.seat-details li .detail-available {
+  background: green;
+}
+.seat-details li .detail-booked {
+  background: #f7bb2a;
+}
+
+.seat-details li .detail-notavailable {
+  background: red;
+}
+
+.seat-details li .detail-selected {
+  background: #5f95f3;
+}

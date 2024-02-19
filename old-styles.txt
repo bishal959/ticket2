@@ -1,0 +1,95 @@
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+    margin: 0;
+    padding: 0;
+}
+
+h2 {
+    text-align: center;
+    color: #333;
+}
+
+#movies-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    margin: 20px;
+}
+
+.movie {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #fff;
+    margin: 10px;
+    padding: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.movie h3 {
+    margin: 0;
+    color: #333;
+}
+
+.movie p {
+    margin: 5px 0;
+    color: #666;
+}
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+    margin: 0;
+    padding: 0;
+}
+
+h2 {
+    text-align: center;
+    color: #333;
+}
+
+#movies-container {
+    display: flex;
+    justify-content: space-around; /* Adjust as needed */
+    align-items: flex-start; /* Adjust as needed */
+    flex-wrap: wrap;
+    margin: 20px;
+   
+}
+
+.movie {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #fff;
+    margin: 10px;
+    padding: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: 300px; /* Adjust as needed */
+    box-sizing: border-box;
+}
+
+.movie h3 {
+    margin: 0;
+    color: #333;
+}
+
+.movie p {
+    margin: 5px 0;
+    color: #666;
+}
+
+.movie img {
+    width: 100%; /* Adjust the width as needed */
+    height: auto; /* Maintain aspect ratio */
+    display: block;
+}
+
+/* Add this style to handle responsive design */
+@media (max-width: 600px) {
+    #movies-container {
+        justify-content: center;
+    }
+}
+
+

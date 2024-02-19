@@ -1,0 +1,27 @@
+.header {
+  background: red;
+}
+
+.category {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.category > div {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  padding: 12px 0;
+  gap: 10px;
+  width: 16rem;
+
+  background-color: #fafafa;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 3px 8px;
+}
+
+.category > div img {
+  aspect-ratio: 9/12;
+  object-fit: cover;
+  width: 100%;
+}

@@ -1,0 +1,47 @@
+.page-layout {
+  display: grid;
+  grid-template-columns: 200px auto;
+}
+
+@media screen and (max-width: 780px) {
+  .page-layout {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.page-layout .menu ul {
+  width: 95%;
+
+  padding: 12px;
+  font-size: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.page-layout .menu ul li {
+  padding: 4px 6px;
+  border-radius: 4px;
+  transition: 0.3s ease-in-out;
+}
+
+.page-layout .menu ul li:hover {
+  background-color: #f4f4f4;
+
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 3px 8px;
+}
+
+.table table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.table table thead {
+  font-weight: bold;
+  background-color: greenyellow;
+}
+
+.table table tbody tr:nth-child(even) {
+  background-color: purple;
+}

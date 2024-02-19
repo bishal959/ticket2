@@ -16,13 +16,17 @@ if (isset($_GET['movie_id'])) {
 
     if ($result->num_rows > 0) {
         $movie = $result->fetch_assoc();
-        echo '<h2>' . $movie['title'] . '</h2>';
-        echo '<img src="' . $movie['image_url'] . '" alt="' . $movie['title'] . ' Poster" class="movie-poster">';
+        echo '<div class="hero-section"><img src="' . $movie['image_url'] . '" alt="' . $movie['title'] . ' Poster" class="movie-poster">';
+        echo '<h2 class="movie-title">' . $movie['title'] . '</h2>';
+
+        echo '<div class="movie-details">';
+
         echo '<p>Release Date: ' . $movie['release_date'] . '</p>';
         echo '<p>Genre: ' . $movie['genre'] . '</p>';
         echo '<p>Run Time: ' . $movie['runTime'] . '</p>';
         echo '<p>Director: ' . $movie['director'] . '</p>';
         echo '<p>Cast: ' . implode(', ', explode(", ", $movie['cast'])) . '</p>';
+        echo '</div></div>';
     }
 }
 
@@ -37,26 +41,47 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Movie Detail</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./styles/movie-detail.css">
+    <link rel="stylesheet" href="./styles/reset.css">
 </head>
 
 <body>
-    
- 
-<h2>Theater Seats</h2>
 
-<div id="screen">Screen</div>
+    <main class="container">
 
-<div id="seats-container">
-    <!-- Seats will be loaded dynamically here -->
-</div>
+        <h2>Theater Seats</h2>
 
-<div id="seatContainer">
-    <h3>Selected Seats:</h3>
-    <ul id="selectedSeats"></ul>
-    <div id="totalPrice"></div>
-    <button id="book-button" onclick="bookSeats()">Book Selected Seats</button>
-</div>
+        <div class="seats-wrapper">
+            <div id="screen">Screen</div>
+            <div id="seats-container">
+                <!-- Seats will be loaded dynamically here -->
+            </div>
+        </div>
+
+        <ul class="seat-details">
+            <li>
+                <span class="detail-available"></span> Available
+            </li>
+
+            <li>
+                <span class="detail-booked"></span> Booked
+            </li>
+            <li>
+                <span class="detail-notavailable"></span> Not Available
+            </li>
+            <li>
+                <span class="detail-selected"></span>Selected
+            </li>
+        </ul>
+
+        <div id="seatContainer">
+            <h3>Selected Seats:</h3>
+            <ul id="selectedSeats"></ul>
+            <div id="totalPrice"></div>
+            <button id="book-button" onclick="bookSeats()">Book Selected Seats</button>
+        </div>
+
+    </main>
     <script>
         // Replace the movie ID with your actual movie ID
         var movieId = <?php echo $movieId; ?>;
@@ -161,31 +186,31 @@ $conn->close();
         }
 
         function bookSeats() {
-    const selectedSeatNumbers = selectedSeatsInfo.map(item => item.seatNumber);
-    const selectedSeatPrices = selectedSeatsInfo.map(item => item.seatPrice);
+            const selectedSeatNumbers = selectedSeatsInfo.map(item => item.seatNumber);
+            const selectedSeatPrices = selectedSeatsInfo.map(item => item.seatPrice);
 
-    // Perform booking logic (you can send selected seat numbers and prices to the server)
-    console.log("Selected Seats: ", selectedSeatNumbers);
-    console.log("Selected Prices: ", selectedSeatPrices);
+            // Perform booking logic (you can send selected seat numbers and prices to the server)
+            console.log("Selected Seats: ", selectedSeatNumbers);
+            console.log("Selected Prices: ", selectedSeatPrices);
 
-    // Send selected seat numbers and prices to the PHP file using AJAX
-    const xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState === XMLHttpRequest.DONE) {
-            if (xhr.status === 200) {
-                console.log("Booking successful");
-                window.location.href = "user.php";
-                // Add any additional logic or UI updates here
-            } else {
-                console.error("Error booking seats:", xhr.status, xhr.statusText);
-            }
+            // Send selected seat numbers and prices to the PHP file using AJAX
+            const xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        console.log("Booking successful");
+                        window.location.href = "user.php";
+                        // Add any additional logic or UI updates here
+                    } else {
+                        console.error("Error booking seats:", xhr.status, xhr.statusText);
+                    }
+                }
+            };
+
+            xhr.open("POST", "book_seats.php", true);
+            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xhr.send("selectedSeats=" + encodeURIComponent(JSON.stringify(selectedSeatNumbers)) + "&movieId=" + encodeURIComponent(movieId) + "&prices=" + encodeURIComponent(JSON.stringify(selectedSeatPrices)));
         }
-    };
-
-    xhr.open("POST", "book_seats.php", true);
-    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xhr.send("selectedSeats=" + encodeURIComponent(JSON.stringify(selectedSeatNumbers)) + "&movieId=" + encodeURIComponent(movieId) + "&prices=" + encodeURIComponent(JSON.stringify(selectedSeatPrices)));
-}
 
 
         loadAvailableSeats();
