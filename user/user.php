@@ -65,7 +65,7 @@ $showDetails = getShowDetailsByUserId($userId);
                         $amount = $booking['unit_price'];
                         $tamount = $booking['unit_price'];
                         $productId = generateRandomProductCode();
-                        $Sucessurl = "$siteurl\sucess.php?booked_seat=" . urlencode($booking['quantity']);
+                        $Successurl = $siteurl . '/success.php?booked_seat=' . urlencode($booking['quantity']);
                         $initiatePaymentForm = $esewa->initiatePayment("$amount", "$tamount", "$productId", "$Sucessurl", "http://localhost/failed.php");
                         // $initiatePaymentkhalti = $khalti->initiatePayment("$tamount", "$productId" );
                     
