@@ -1,7 +1,6 @@
 <?php
-
 include("config.php");
-include("session.php");
+
 
 // Check if movie_id is set
 if (isset($_GET['movie_id'])) {

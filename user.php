@@ -113,9 +113,15 @@ $showDetails = getShowDetailsByUserId($userId);
     </thead>
     <tbody>
     <?php
+
     $esewa = new Esewa();
     // $khalti = new Khalti(); // Assuming Esewa class is defined somewhere
    
+
+    $esewa = new Esewa(); // Assuming Esewa class is defined somewhere
+    $showDetails = getpaidShowDetailsByUserId($userId);
+    echo $showDetails;
+
     foreach ($showDetails as $booking) {
         $amount = $booking['unit_price'];
         $tamount = $booking['unit_price'];

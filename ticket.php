@@ -2,9 +2,11 @@
 session_start();
 include("function.php");
 include("config.php");
-// include("esewa.php");
+include("esewa.php");
 $userId=$_SESSION['user_id'];
+
 $showDetails=getpaidShowDetailsByUserId($userId);
+
 
 ?>
 <!DOCTYPE html>
@@ -130,14 +132,14 @@ $showDetails=getpaidShowDetailsByUserId($userId);
         $tamount = $booking['unit_price'];
         $productId = generateRandomProductCode();
         
-        
+        $showDetails = getpaidShowDetailsByUserId($userId);
         
         echo '<tr class="border-b">';
         echo '<td class="py-2 px-4">' . $booking['movie_title'] . '</td>';
         echo '<td class="py-2 px-4">' . $booking['show_date'] . '</td>';
         echo '<td class="py-2 px-3">' . $booking['quantity'] . '</td>';
         echo '<td class="py-2 px-4">Rs.' . number_format($booking['unit_price'], 2) . '</td>';
-        echo '<td class="py-2 px-4"><a href="http://localhost/k/user/ticket.php?booked_seat=' . urlencode($booking['quantity']) . '" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Print Ticket</a> </td>';
+        echo '<td class="py-2 px-4"><a href="http://bibekluitel.rf.gd/user/ticket.php?booked_seat=' . urlencode($booking['quantity']) . '" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Print Ticket</a> </td>';
         echo '</tr>';
         
 
