@@ -60,12 +60,13 @@ $showDetails = getShowDetailsByUserId($userId);
                     $esewa = new Esewa(); // Assuming Esewa class is defined somewhere
                     $showDetails = getShowDetailsByUserId($userId);
                     
+                    
 
                     foreach ($showDetails as $booking) {
                         $amount = $booking['unit_price'];
                         $tamount = $booking['unit_price'];
                         $productId = generateRandomProductCode();
-                        $Successurl = $siteurl . '/success.php?booked_seat=' . urlencode($booking['quantity']);
+                        $Successurl = .$siteurl . '/success.php?booked_seat=' . urlencode($booking['quantity']);
                         $initiatePaymentForm = $esewa->initiatePayment("$amount", "$tamount", "$productId", "$Sucessurl", "http://localhost/failed.php");
                         // $initiatePaymentkhalti = $khalti->initiatePayment("$tamount", "$productId" );
                     
