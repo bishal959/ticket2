@@ -66,7 +66,7 @@ $showDetails = getShowDetailsByUserId($userId);
                         $amount = $booking['unit_price'];
                         $tamount = $booking['unit_price'];
                         $productId = generateRandomProductCode();
-                        $Successurl = 'https://bibekluitel.rf.gd/user/success.php?booked_seat=' . urlencode($booking['quantity']);
+                         $Sucessurl = "http://bibekluitel.rf.gd\user\sucess.php?booked_seat=" . urlencode($booking['quantity']);
                         $initiatePaymentForm = $esewa->initiatePayment("$amount", "$tamount", "$productId", "$Sucessurl", "http://localhost/failed.php");
                         // $initiatePaymentkhalti = $khalti->initiatePayment("$tamount", "$productId" );
                     
