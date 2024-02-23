@@ -3,30 +3,36 @@ $to = "bishalluitel6@gmail.com";
 $subject = "Congratulations on Your Registration";
 
 // Load the HTML template
-$htmlTemplate = file_get_contents("templete.html");
+$htmlTemplatePath = "template.html"; // Adjust the path based on your setup
 
-// Replace placeholders with actual user data
-$userName = "John Doe"; // Replace with the user's name
-$eventURL = "Bishalluitel.com.np/event"; // Replace with the event URL
-$pageURL = "bishalluitel.com.np"; // Replace with the page URL
+if (file_exists($htmlTemplatePath)) {
+    $htmlTemplate = file_get_contents($htmlTemplatePath);
 
-$htmlTemplate = str_replace("{{user_name}}", $userName, $htmlTemplate);
-$htmlTemplate = str_replace("{{event_url}}", $eventURL, $htmlTemplate);
-$htmlTemplate = str_replace("{{page_url}}", $pageURL, $htmlTemplate);
+    // Replace placeholders with actual user data
+    $userName = "John Doe"; // Replace with the user's name
+    $eventURL = "https://Bishalluitel.com.np/event"; // Replace with the event URL
+    $pageURL = "https://bishalluitel.com.np"; // Replace with the page URL
 
-$headers = "From: sender@example.com\r\n";
-$headers .= "Reply-To: sender@example.com\r\n";
-$headers .= "CC: cc@example.com\r\n";
-$headers .= "BCC: bcc@example.com\r\n";
-$headers .= "MIME-Version: 1.0\r\n";
-$headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
+    $htmlTemplate = str_replace("{{user_name}}", $userName, $htmlTemplate);
+    $htmlTemplate = str_replace("{{event_url}}", $eventURL, $htmlTemplate);
+    $htmlTemplate = str_replace("{{page_url}}", $pageURL, $htmlTemplate);
 
-// Use mail() function to send the email
-$mailSent = mail($to, $subject, $htmlTemplate, $headers);
+    $headers = "From: sender@example.com\r\n";
+    $headers .= "Reply-To: sender@example.com\r\n";
+    $headers .= "CC: cc@example.com\r\n";
+    $headers .= "BCC: bcc@example.com\r\n";
+    $headers .= "MIME-Version: 1.0\r\n";
+    $headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
 
-if ($mailSent) {
-    echo "Email sent successfully.";
+    // Use mail() function to send the email
+    $mailSent = mail($to, $subject, $htmlTemplate, $headers);
+
+    if ($mailSent) {
+        echo "Email sent successfully.";
+    } else {
+        echo "Failed to send email.";
+    }
 } else {
-    echo "Failed to send email.";
+    echo "HTML template file not found.";
 }
 ?>
