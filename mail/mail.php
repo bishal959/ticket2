@@ -1,6 +1,7 @@
 <?php
 $to = "bishalluitel6@gmail.com";
 $subject = "Congratulations on Your Registration";
+phpinfo();
 
 // Load the HTML template
 $htmlTemplatePath = "templete.html"; // Adjust the path based on your setup
