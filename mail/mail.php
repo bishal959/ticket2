@@ -3,7 +3,7 @@ $to = "bishalluitel6@gmail.com";
 $subject = "Congratulations on Your Registration";
 
 // Load the HTML template
-$htmlTemplatePath = "template.html"; // Adjust the path based on your setup
+$htmlTemplatePath = "templete.html"; // Adjust the path based on your setup
 
 if (file_exists($htmlTemplatePath)) {
     $htmlTemplate = file_get_contents($htmlTemplatePath);
