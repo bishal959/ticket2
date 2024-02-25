@@ -1,5 +1,6 @@
 <?php
 session_start();
+$userid = $_SESSION['user_id'];
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
@@ -29,7 +30,7 @@ try {
     $mail->setFrom('bishalluitel6@gmail.com', 'Mailer'); 
     $mail->addAddress('bishal.7037707@gpkmc.edu.np');                   // Name is optional
     $mail->addReplyTo('info@bishalluitel.com.np', 'Information');
-    // $mail->addAttachment('/var/tmp/file.tar.gz');             // Add attachments
+    $mail->addAttachment('../tempdf/' . $userid . '.pdf');
     // $mail->addAttachment('/tmp/image.jpg', 'new.jpg');   
     $userName = $_SESSION['username'];
     $template = file_get_contents('templete.html');

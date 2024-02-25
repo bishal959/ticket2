@@ -19,10 +19,11 @@ $bookedseat = $_GET['booked_seat'];
 $result = updatetopaid($bookedseat);
 if ($result !== false && $result > 0) {
     echo "Booking payment status updated successfully. Affected rows: " . $result;
-    header("Location: ticket.php");
+    header("Location: ../ticket/send.php?booked_seat=" . $bookedseat);
 } else {
     echo "Error updating booking payment status.";
 }
+
 
 ?>
 
