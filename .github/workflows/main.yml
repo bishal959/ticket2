@@ -18,4 +18,6 @@ jobs:
         exclude: |
          .env
          config.php
+         .git
+         .github
   
