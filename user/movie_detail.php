@@ -4,7 +4,12 @@ include('config.php');
 
 // Include your database connection file
 
-$username = $_SESSION["username"];
+
+if (isset( $_SESSION['username'])) {
+    $username = $_SESSION["username"];
+    }else{
+        header('location: ../login.php');
+    }
 
 // Check if the movie_id parameter is set in the URL
 if (isset($_GET['movie_id'])) {

@@ -65,7 +65,21 @@ function updatetopaid($book_seat)
 
         // Close the statement
         $stmt->close();
+        if ($affectedRows > 0) {
+            $updateAvailabilityQuery = "UPDATE `seats` SET `availability_status` = 'Unavailable' WHERE seat_number=?";
+            $updateAvailabilityStmt = $conn->prepare($updateAvailabilityQuery);
 
+            // Bind the parameter for updating availability
+            $updateAvailabilityStmt->bind_param("s", $book_seat);
+
+            // Execute the query for updating availability
+            if (!$updateAvailabilityStmt->execute()) {
+                throw new Exception("Execute failed: (" . $updateAvailabilityStmt->errno . ") " . $updateAvailabilityStmt->error);
+            }
+
+            // Close the statement for updating availability
+            $updateAvailabilityStmt->close();
+        }
         // Return true for success or the number of affected rows
         return ($affectedRows > 0) ? $token : true;
     } catch (Exception $e) {
@@ -153,6 +167,28 @@ function printticket($userId, $book_seat) {
         return [];
     }
 }
+function insertMovieData($title, $releaseDate, $genre, $runTime, $director, $cast, $imageFileName, $imageFilePath)
+{
+    global $conn;
 
+    try {
+        $query = "INSERT INTO movies (title, release_date, genre, runTime, director, cast, image_url) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        $stmt = $conn->prepare($query);
+
+        if (!$stmt) {
+            throw new Exception("Prepare failed: (" . $conn->errno . ") " . $conn->error);
+        }
+
+        $stmt->bind_param("sssssss", $title, $releaseDate, $genre, $runTime, $director, $cast, $imageFilePath);
+
+        if (!$stmt->execute()) {
+            throw new Exception("Execute failed: (" . $stmt->errno . ") " . $stmt->error);
+        }
+
+        echo "Movie added successfully!";
+    } catch (Exception $e) {
+        echo "Error: " . $e->getMessage();
+    }
+}
 
 ?>

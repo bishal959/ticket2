@@ -127,7 +127,7 @@
 }
 
 .seat-details li .detail-notavailable {
-  background: red;
+  background:#5a110c;
 }
 
 .seat-details li .detail-selected {
