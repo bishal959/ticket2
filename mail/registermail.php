@@ -30,17 +30,16 @@ try {
     $mail->setFrom('bishalluitel6@gmail.com', 'Mailer'); 
     $mail->addAddress('bishal.7037707@gpkmc.edu.np');                   // Name is optional
     $mail->addReplyTo('info@bishalluitel.com.np', 'Information');
-    $mail->addAttachment('../tempdf/' . $userid . '.pdf');
-    // $mail->addAttachment('/tmp/image.jpg', 'new.jpg');   
     $userName = $_SESSION['username'];
+    $template = file_get_contents('templete.html');
     $template = str_replace('{UserName}', $userName, $template);
         $mail->isHTML(true);
-        $mail->Subject = 'Your Ticket is Confirmed';
+        $mail->Subject = 'Congratulations on Your Registration';
         $mail->msgHTML($template);
     // Send the email
     $mail->send();
     echo 'Message has been sent';
-    header("Location: ../user/ticket.php");
+    header("Location: ../user/movie.php");
 } catch (Exception $e) {
     echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
 }
