@@ -17,4 +17,5 @@ jobs:
         server-dir: /htdocs/
         exclude: |
          .env
+         config.php
   
