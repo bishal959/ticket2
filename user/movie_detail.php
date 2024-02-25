@@ -84,7 +84,7 @@ $conn->close();
             <ul id="selectedSeats"></ul>
             <div id="totalPrice"></div>
             <button id="book-button" onclick="bookSeats()">Book Selected Seats</button>
-            <button id="reset-button" class="reset-button" onclick="resetSeats()">Reset Seats</button>
+            <button id="reset-button"  onclick="resetSeats()">Reset Seats</button>
         </div>
         </div>
 

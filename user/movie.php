@@ -75,6 +75,9 @@
                 // Current date in the format YYYY-MM-DD
                 const currentDate = new Date().toISOString().split('T')[0];
 
+                const oneweek = new Date(currentDate);
+                oneWeek.setDate(currentDate.getDate() - 7);
+
                 moviesData.forEach(movie => {
                     const releaseDate = movie.releaseDate;
                     const category = getCategory(releaseDate, currentDate);
@@ -98,8 +101,8 @@
             }
 
             // Function to determine the category based on release date
-            function getCategory(releaseDate, currentDate) {
-                if (releaseDate <= currentDate) {
+            function getCategory(releaseDate, currentDate, oneWeek) {
+                if (releaseDate <= oneweek) {
                     return 'now-showing';
                 } else if (releaseDate === currentDate) {
                     return 'next-change';
