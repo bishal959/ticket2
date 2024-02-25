@@ -1,3 +1,7 @@
+<?php
+// include("../env+session.php");
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -71,12 +75,12 @@
                 // Current date in the format YYYY-MM-DD
                 const currentDate = new Date().toISOString().split('T')[0];
 
-                const oneWeekBefore = new Date(currentDate);
-                oneWeekBefore.setDate(oneWeekBefore.getDate() - 7);
+                const oneWeek = new Date(currentDate);
+                oneWeek.setDate(oneWeek.getDate() - 7);
 
                 moviesData.forEach(movie => {
                     const releaseDate = movie.releaseDate;
-                    const category = getCategory(releaseDate, currentDate, oneWeekBefore);
+                    const category = getCategory(releaseDate, currentDate, oneWeek);
 
                     const movieElement = createMovieElement(movie);
 
@@ -97,20 +101,18 @@
             }
 
             // Function to determine the category based on release date
-            function getCategory(releaseDate, currentDate, oneWeekBefore) {
-                const sevenDaysAfter = new Date(currentDate);
-                sevenDaysAfter.setDate(currentDate.getDate() + 7);
-
-                if (releaseDate >= oneWeekBefore && releaseDate <= currentDate) {
+            function getCategory(releaseDate, currentDate, oneWeek) {
+                if (releaseDate >= currentDate && releaseDate <= oneWeek) {
                     return 'now-showing';
-                } else if (releaseDate > currentDate && releaseDate <= sevenDaysAfter) {
+                } else if ( releaseDate <= new Date(oneWeek.getTime() + 3 * 24 * 60 * 60 * 1000)) {
                     return 'next-change';
-                } else if (releaseDate > sevenDaysAfter) {
+                } else if (releaseDate > currentDate) {
                     return 'coming-soon';
                 } else {
                     return 'coming-soon'; // You might want to handle other cases explicitly
                 }
             }
+
 
             // Function to create a movie element
             function createMovieElement(movie) {
