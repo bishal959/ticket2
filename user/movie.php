@@ -102,9 +102,9 @@
 
             // Function to determine the category based on release date
             function getCategory(releaseDate, currentDate, oneWeek) {
-                if (releaseDate <= currentDate && releaseDate >= oneWeekBefore) {
+                if (releaseDate <= oneWeek) {
                     return 'now-showing';
-                } else if (releaseDate === currentDate) {
+                } else if (releaseDate ==> currentDate) {
                     return 'next-change';
                 } else {
                     return 'coming-soon';
