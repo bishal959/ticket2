@@ -2,11 +2,11 @@
 $envFile = __DIR__ . '/.env';
 $envVariables = parse_ini_file($envFile);
 $smtp_pass=$envVariables['SMTP_PASS'];
+$servername = $envVariables['servername'];
+$username = $envVariables['username'];
+$password = $envVariables['password'];
+$dbname = $envVariables['dbname'];
 
-$servername = "sql108.infinityfree.com";
-$username = "epiz_34107324";
-$password = "bb7P9jJ0VpqzCv";
-$dbname = "epiz_34107324_movie";
 // $servername = "localhost";
 // $username = "root";
 // $password = "";

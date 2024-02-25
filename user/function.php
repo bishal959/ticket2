@@ -1,5 +1,5 @@
 <?php
-
+include("session.php");
 include("config.php");
 function getShowDetailsByUserId($userId) {
     global $conn;
