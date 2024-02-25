@@ -2,7 +2,6 @@
 session_start();
 include("function.php");
 include("esewa.php");
-include("../env+session.php");
 $userId = $_SESSION['user_id'];
 $showDetails = getShowDetailsByUserId($userId);
 
