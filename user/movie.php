@@ -77,10 +77,12 @@
 
                 const oneWeek = new Date(currentDate);
                 oneWeek.setDate(oneWeek.getDate() - 7);
+                const fivedays = new Date(currentDate);
+                fivedays.setDate(fivedays.getDate() + 5);
 
                 moviesData.forEach(movie => {
                     const releaseDate = movie.releaseDate;
-                    const category = getCategory(releaseDate, currentDate, oneWeek);
+                    const category = getCategory(releaseDate, currentDate, oneWeek, fivedays);
 
                     const movieElement = createMovieElement(movie);
 
@@ -101,10 +103,10 @@
             }
 
             // Function to determine the category based on release date
-            function getCategory(releaseDate, currentDate, oneWeek) {
+            function getCategory(releaseDate, currentDate, oneWeek, fivedays) {
                 if (releaseDate >= currentDate && releaseDate <= oneWeek) {
                     return 'now-showing';
-                } else if ( releaseDate <= new Date(oneWeek.getTime() + 3 * 24 * 60 * 60 * 1000)) {
+                } else if ( releaseDate => fivedays) {
                     return 'next-change';
                 } else if (releaseDate > currentDate) {
                     return 'coming-soon';
