@@ -102,14 +102,17 @@
 
             // Function to determine the category based on release date
             function getCategory(releaseDate, currentDate, oneWeek) {
-                if (releaseDate <= oneWeek && releaseDate >= currentDate && releaseDate > oneWeek) {
+                if (releaseDate >= currentDate && releaseDate <= oneWeek) {
                     return 'now-showing';
-                } else if (releaseDate > currentDate) {
+                } else if (releaseDate > oneWeek && releaseDate <= new Date(oneWeek.getTime() + 3 * 24 * 60 * 60 * 1000)) {
                     return 'next-change';
                 } else if (releaseDate > currentDate) {
                     return 'coming-soon';
+                } else {
+                    return 'coming-soon'; // You might want to handle other cases explicitly
                 }
             }
+
 
             // Function to create a movie element
             function createMovieElement(movie) {
