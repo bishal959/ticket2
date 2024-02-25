@@ -1,4 +1,8 @@
 <?php
+$envFile = __DIR__ . '/.env';
+$envVariables = parse_ini_file($envFile);
+$smtp_pass=$envVariables['SMTP_PASS'];
+
 $servername = "sql108.infinityfree.com";
 $username = "epiz_34107324";
 $password = "bb7P9jJ0VpqzCv";
