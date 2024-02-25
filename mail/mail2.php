@@ -41,6 +41,7 @@ try {
     // Send the email
     $mail->send();
     echo 'Message has been sent';
+    header("Location: ../user/ticket.php");
 } catch (Exception $e) {
     echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
 }
