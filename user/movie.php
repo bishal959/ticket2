@@ -104,7 +104,7 @@
             function getCategory(releaseDate, currentDate, oneWeek) {
                 if (releaseDate <= oneWeek && releaseDate >= currentDate) {
                     return 'now-showing';
-                } else if (releaseDate => currentDate) {
+                } else if (releaseDate > currentDate) {
                     return 'next-change';
                 } else {
                     return 'coming-soon';
