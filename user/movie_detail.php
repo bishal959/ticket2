@@ -61,7 +61,7 @@ $conn->close();
             <div id="seats-container">
                 <!-- Seats will be loaded dynamically here -->
             </div>
-        </div>
+       
 
         <ul class="seat-details">
             <li>
@@ -84,6 +84,8 @@ $conn->close();
             <ul id="selectedSeats"></ul>
             <div id="totalPrice"></div>
             <button id="book-button" onclick="bookSeats()">Book Selected Seats</button>
+            <button id="reset-button" class="reset-button" onclick="resetSeats()">Reset Seats</button>
+        </div>
         </div>
 
     </main>
@@ -110,6 +112,19 @@ $conn->close();
             xhr.open("GET", "get_available_seats.php?movie_id=" + movieId, true);
             xhr.send();
         }
+        function resetSeats() {
+    // Remove the "selected" class from all seat elements
+    const seatElements = document.querySelectorAll('.seat');
+    seatElements.forEach(seat => {
+        seat.classList.remove('selected');
+    });
+
+    // Clear the selectedSeatsInfo array
+    selectedSeatsInfo = [];
+
+    // Update the display of selected seats
+    updateSelectedSeats();
+}
 
         function updateSeats(availableSeats) {
             const seatsContainer = document.getElementById("seats-container");
@@ -191,6 +206,10 @@ $conn->close();
         }
 
         function bookSeats() {
+            if (selectedSeatsInfo.length === 0) {
+            alert("Please select at least one seat before booking.");
+            return; // Don't proceed further if no seats are selected
+            }
             const selectedSeatNumbers = selectedSeatsInfo.map(item => item.seatNumber);
             const selectedSeatPrices = selectedSeatsInfo.map(item => item.seatPrice);
 

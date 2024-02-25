@@ -40,18 +40,16 @@
   text-align: center;
   margin-bottom: 10px;
 }
-#book-button {
-  display: block;
-  margin-top: 10px;
+#book-button , #reset-button{
   padding: 10px;
   background-color: #4caf50;
   color: #fff;
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  margin-top: 10px;
 }
 
-/*  */
 
 .hero-section {
   height: 90vh;
