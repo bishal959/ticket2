@@ -1,7 +1,3 @@
-<?php
-// include("../env+session.php");
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -75,12 +71,12 @@
                 // Current date in the format YYYY-MM-DD
                 const currentDate = new Date().toISOString().split('T')[0];
 
-                const oneWeek = new Date(currentDate);
-                oneWeek.setDate(oneWeek.getDate() - 7);
+                const oneWeekBefore = new Date(currentDate);
+                oneWeekBefore.setDate(oneWeekBefore.getDate() - 7);
 
                 moviesData.forEach(movie => {
                     const releaseDate = movie.releaseDate;
-                    const category = getCategory(releaseDate, currentDate, oneWeek);
+                    const category = getCategory(releaseDate, currentDate, oneWeekBefore);
 
                     const movieElement = createMovieElement(movie);
 
