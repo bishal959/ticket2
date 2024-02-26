@@ -1,9 +1,15 @@
 <?php
-
+session_start();
+if (isset($_SESSION["user_id"]) && $_SESSION["user_id"] == 1) {
+    echo "Welcome, to the Admin Page";
+} else {
+    header('location: ../login.php');
+    exit(); 
+}
 include("../config.php");
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['image_url'])) {
-    // Retrieve form data
+   
     $title = $_POST['title'];
     $releaseDate = $_POST['release_date'];
     $genre = $_POST['genre'];
@@ -11,19 +17,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['image_url'])) {
     $director = $_POST['director'];
     $cast = $_POST['cast'];
 
-    // Validate and sanitize input (add your validation logic here)
-
-    // Handle file upload
+    
     $imageFileName = '../image/' . $_FILES['image_url']['name'];
     $imageFilePath = '../image/' . $imageFileName;
 
-    // Move the uploaded file to the destination directory
+    
     move_uploaded_file($_FILES['image_url']['tmp_name'], $imageFilePath);
 
-    // Convert the $genre array to a comma-separated string
+    
     $genreString = implode(",", $genre);
 
-    // Prepare and execute SQL statement for movie insertion
+    
     $stmt = $conn->prepare("INSERT INTO movies (title, release_date, genre, runTime, director, cast, image_url) VALUES (?, ?, ?, ?, ?, ?, ?)");
 
     if (!$stmt) {
@@ -36,20 +40,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['image_url'])) {
         die("Error executing statement: " . $stmt->error);
     }
 
-    // Get the last inserted movie ID
+   
     $lastMovieId = $conn->insert_id;
 
-    // Close the statement
+
     $stmt->close();
 
-    // Prepare and execute SQL statement for seat insertion
+    
     $seatStmt = $conn->prepare("INSERT INTO seats (movie_id, availability_status, theater_id, seat_number, price) VALUES (?, 'Available', 1, ?, '100.00')");
 
     if (!$seatStmt) {
         die("Error preparing seat statement: " . $conn->error);
     }
 
-    // Define seat numbers and prices based on your requirements
+  
     $seatData = array(
         '1A', '1B', '1C', '1D', '1E', '1F', '1G', '1H', '1I', '1J',
         '2A', '2B', '2C', '2D', '2E', '2F', '2G', '2H', '2I', '2J',
@@ -61,7 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['image_url'])) {
         '8A', '8B', '8C', '8D', '8E', '8F', '8G', '8H', '8I', '8J',
         '9A', '9B', '9C', '9D', '9E', '9F', '9G', '9H', '9I', '9J',
         '10A', '10B', '10C', '10D', '10E', '10F', '10G', '10H', '10I', '10J'
-        // ... Add more seat data as needed
+      
     );
 
     foreach ($seatData as $seatNumber) {
@@ -72,14 +76,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['image_url'])) {
         }
     }
 
-    // Close the seat statement
+
     $seatStmt->close();
 
     echo "Data inserted successfully";
-    header ('Location: profile.php'); // You can remove or modify this line based on your needs
+    header ('Location: profile.php'); 
 }
 
-// Close the database connection (optional, depending on your needs)
+
 $conn->close();
 
 ?>

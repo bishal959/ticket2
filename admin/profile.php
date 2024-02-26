@@ -1,19 +1,22 @@
 <?php
 
 include("../config.php");
+session_start();
+if (isset($_SESSION["user_id"]) && $_SESSION["user_id"] == 1) {
+    echo "Welcome, to the Admin Page";
+} else {
+    header('location: ../login.php');
+    exit(); 
+}
 
-// Retrieve all movies from the database
+
 $result = $conn->query("SELECT * FROM movies");
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Retrieve form data
+    
     $movieId = $_POST['movie_id'];
     $showtime = $_POST['showtime'];
-    $theaterId = 1; // Assuming theater_id is always 1 based on your comment
-
-    // Validate and sanitize input (add your validation logic here)
-
-    // Prepare and execute SQL statement
+    $theaterId = 1; 
     $stmt = $conn->prepare("INSERT INTO screenings (id,movie_id, showtime, theater_id) VALUES (?,?, ?, ?)");
 
     if (!$stmt) {
@@ -27,13 +30,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     echo "Screening added successfully"; 
-     // You can remove or modify this line based on your needs
-
-    // Close the statement
+   
     $stmt->close();
 }
 
-// Close the database connection (optional, depending on your needs)
 $conn->close();
 
 
@@ -85,27 +85,27 @@ $conn->close();
         <label for="movie_id">Movie:</label>
         <?php
         if ($result->num_rows > 0) {
-            // Output the opening <select> tag
+         
             echo '<div class="movie">';
             echo '<select name="movie_id" id="movie_id">';
             echo '<option value="" selected disabled>Select a Movie</option>';
             
         
-            // Loop through each row
+          
             while ($row = $result->fetch_assoc()) {
-                // Output an <option> tag for each movie title
+                
                 echo '<option value="' . $row['id'] . '">' . $row['title'] . '</option>';
             }
         
-            // Output the closing </select> tag
+           
             echo '</select>';
             echo '</div>';
         } else {
-            // If there are no movies in the database
+          
             echo "No movies found.";
         }
         
-        // Close the database connection
+    
         
         ?>
         <label for="release_date">show Date:</label>
