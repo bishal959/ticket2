@@ -1,18 +1,6 @@
 <?php
 
-// Database connection
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "movie";
-
-// Create a connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Check the connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+include("../config.php");
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['image_url'])) {
     // Retrieve form data
@@ -55,5 +43,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['image_url'])) {
 
 // Close the database connection (optional, depending on your needs)
 $conn->close();
-
 ?>
