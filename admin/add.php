@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['image_url'])) {
     // Validate and sanitize input (add your validation logic here)
 
     // Handle file upload
-    $imageFileName = $_FILES['image_url']['name'];
+    $imageFileName = '../image/'. $_FILES['image_url']['name'];
     $imageFilePath = '../image/' . $imageFileName;
 
     // Move the uploaded file to the destination directory
