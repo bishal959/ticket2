@@ -75,7 +75,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['image_url'])) {
     // Close the seat statement
     $seatStmt->close();
 
-    echo "Data inserted successfully"; // You can remove or modify this line based on your needs
+    echo "Data inserted successfully";
+    header ('Location: profile.php'); // You can remove or modify this line based on your needs
 }
 
 // Close the database connection (optional, depending on your needs)

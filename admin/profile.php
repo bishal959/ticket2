@@ -26,7 +26,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         die("Error executing statement: " . $stmt->error);
     }
 
-    echo "Screening added successfully"; // You can remove or modify this line based on your needs
+    echo "Screening added successfully"; 
+     // You can remove or modify this line based on your needs
 
     // Close the statement
     $stmt->close();

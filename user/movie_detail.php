@@ -223,7 +223,7 @@ $conn->close();
                 if (xhr.readyState === XMLHttpRequest.DONE) {
                     if (xhr.status === 200) {
                         console.log("Booking successful");
-                        // window.location.href = "user.php";
+                        window.location.href = "user.php";
                         // Add any additional logic or UI updates here
                     } else {
                         console.error("Error booking seats:", xhr.status, xhr.statusText);
