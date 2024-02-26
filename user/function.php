@@ -166,28 +166,23 @@ function printticket($userId, $book_seat) {
         return [];
     }
 }
-function insertMovieData($title, $releaseDate, $genre, $runTime, $director, $cast, $imageFileName, $imageFilePath)
-{
+function insertMovieData($title, $releaseDate, $genre, $runTime, $director, $cast, $imageFileName) {
     global $conn;
 
-    try {
-        $query = "INSERT INTO movies (title, release_date, genre, runTime, director, cast, image_url) VALUES (?, ?, ?, ?, ?, ?, ?)";
-        $stmt = $conn->prepare($query);
+    $stmt = $conn->prepare("INSERT INTO movies (title, release_date, genre, runTime, director, cast, image_url) VALUES (?, ?, ?, ?, ?, ?, ?)");
 
-        if (!$stmt) {
-            throw new Exception("Prepare failed: (" . $conn->errno . ") " . $conn->error);
-        }
-
-        $stmt->bind_param("sssssss", $title, $releaseDate, $genre, $runTime, $director, $cast, $imageFilePath);
-
-        if (!$stmt->execute()) {
-            throw new Exception("Execute failed: (" . $stmt->errno . ") " . $stmt->error);
-        }
-
-        echo "Movie added successfully!";
-    } catch (Exception $e) {
-        echo "Error: " . $e->getMessage();
+    if (!$stmt) {
+        die("Error preparing statement: " . $conn->error);
     }
+
+    $stmt->bind_param("sssssss", $title, $releaseDate, $genre, $runTime, $director, $cast, $imageFileName);
+
+    if (!$stmt->execute()) {
+        die("Error executing statement: " . $stmt->error);
+    }
+
+    $stmt->close();
 }
+
 
 ?>
