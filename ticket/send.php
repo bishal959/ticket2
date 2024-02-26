@@ -63,6 +63,7 @@ foreach ($showDetails as $booking) {
 }
 
 $pdf->Output(__DIR__ . "/../tempdf/$userId.pdf", "F");
+sleep(2);
 header("Location: ../mail/mail2.php");
 
 ?>
