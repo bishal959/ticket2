@@ -1,3 +1,43 @@
+<?php
+
+include("../config.php");
+
+// Retrieve all movies from the database
+$result = $conn->query("SELECT * FROM movies");
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Retrieve form data
+    $movieId = $_POST['movie_id'];
+    $showtime = $_POST['showtime'];
+    $theaterId = 1; // Assuming theater_id is always 1 based on your comment
+
+    // Validate and sanitize input (add your validation logic here)
+
+    // Prepare and execute SQL statement
+    $stmt = $conn->prepare("INSERT INTO screenings (id,movie_id, showtime, theater_id) VALUES (?,?, ?, ?)");
+
+    if (!$stmt) {
+        die("Error preparing statement: " . $conn->error);
+    }
+
+    $stmt->bind_param("iiss",$movieId, $movieId, $showtime, $theaterId);
+
+    if (!$stmt->execute()) {
+        die("Error executing statement: " . $stmt->error);
+    }
+
+    echo "Screening added successfully"; // You can remove or modify this line based on your needs
+
+    // Close the statement
+    $stmt->close();
+}
+
+// Close the database connection (optional, depending on your needs)
+$conn->close();
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,6 +47,7 @@
     <title>Admin Menu</title>
 </head>
 <body>
+<div class="seperator">
     <form action="add.php" method="post" enctype="multipart/form-data">
         <label for="title">Movie Title:</label>
         <input type="text" name="title" placeholder="Movie Title" required>
@@ -36,6 +77,41 @@
 
         <input type="submit" value="Add Movie">
     </form>
+    </div>
+    <div class="seperator">
+    <form action="" method="post" enctype="multipart/form-data">
+    <h1>Add Screnning</h1>
+        <label for="movie_id">Movie:</label>
+        <?php
+        if ($result->num_rows > 0) {
+            // Output the opening <select> tag
+            echo '<div class="movie">';
+            echo '<select name="movie_id" id="movie_id">';
+            echo '<option value="" selected disabled>Select a Movie</option>';
+            
+        
+            // Loop through each row
+            while ($row = $result->fetch_assoc()) {
+                // Output an <option> tag for each movie title
+                echo '<option value="' . $row['id'] . '">' . $row['title'] . '</option>';
+            }
+        
+            // Output the closing </select> tag
+            echo '</select>';
+            echo '</div>';
+        } else {
+            // If there are no movies in the database
+            echo "No movies found.";
+        }
+        
+        // Close the database connection
+        
+        ?>
+        <label for="release_date">show Date:</label>
+        <input type="date" name="showtime" placeholder="Release Date" required>
+        <input type="submit" value="Add Screening">
+    </form>
+    </div>
 
     <script src="http://cdn.jsdelivr.net/timepicker.js/latest/timepicker.min.js"></script>
     <link href="http://cdn.jsdelivr.net/timepicker.js/latest/timepicker.min.css" rel="stylesheet"/>
@@ -54,16 +130,19 @@
     </script>
 </body>
 <style>
+    .seperator {
+        display: flex;
+        justify-content: center;
+        padding: 50px;
+        max-width: 400px;
+    }
     body {
         font-family: Arial, sans-serif;
-        background-color: #f4f4f4;
-        padding: 20px;
+        display: flex;
     }
     
     form {
-        max-width: 400px;
-        margin: 0 auto;
-        background-color: #fff;
+        margin: 0 ;
         padding: 20px;
         border-radius: 5px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -100,6 +179,10 @@
     
     input[type="submit"]:focus {
         outline: none;
+    }
+    .movie{
+       
+        max-width: 300px;
     }
 </style>
 </html>
