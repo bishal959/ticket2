@@ -106,7 +106,7 @@
             function getCategory(releaseDate, currentDate, oneWeek, fivedays) {
     if (releaseDate === currentDate) {
         return 'now-showing';    
-    } else if (releaseDate > currentDate) {
+    } else if (releaseDate === oneWeek || releaseDate === fivedays || releaseDate > currentDate) {
         return 'coming-soon';
     } else {
         return 'error'; // You might want to handle other cases explicitly
