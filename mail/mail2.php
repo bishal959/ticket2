@@ -33,6 +33,7 @@ try {
     $mail->addAttachment('../tempdf/' . $userid . '.pdf');
     // $mail->addAttachment('/tmp/image.jpg', 'new.jpg');   
     $userName = $_SESSION['username'];
+    $template = file_get_contents('templete.html');
     $template = str_replace('{UserName}', $userName, $template);
         $mail->isHTML(true);
         $mail->Subject = 'Your Ticket is Confirmed';
