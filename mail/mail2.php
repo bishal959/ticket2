@@ -2,6 +2,7 @@
 session_start();
 $userid = $_SESSION['user_id'];
 $to=$_SESSION['email'];
+
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\SMTP; // Add this line to import the SMTP class
@@ -28,7 +29,7 @@ try {
     // Rest of the code remains unchanged
     // ...
     $mail->setFrom('bishalluitel6@gmail.com', 'Alerts'); 
-    $mail->addAddress(''.$to.'');                   // Name is optional
+    $mail->addAddress($to);                
     $mail->addReplyTo('info@bishalluitel.com.np', 'Information');
     $mail->addAttachment('../tempdf/' . $userid . '.pdf');
     // $mail->addAttachment('/tmp/image.jpg', 'new.jpg');   
