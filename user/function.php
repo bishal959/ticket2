@@ -183,10 +183,12 @@ function printticket($userId, $book_seat) {
 
         return $showDetailspaid;
     } catch (Exception $e) {
+        // Log or handle the exception appropriately (e.g., log to a file, send an email, etc.)
         echo "Error: " . $e->getMessage();
         return [];
     }
 }
+
 function insertMovieData($title, $releaseDate, $genre, $runTime, $director, $cast, $imageFileName) {
     global $conn;
 
