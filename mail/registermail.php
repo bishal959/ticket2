@@ -1,6 +1,7 @@
 <?php
 session_start();
 $userid = $_SESSION['user_id'];
+$to=$_SESSION['email'];
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
@@ -28,7 +29,7 @@ try {
     // Rest of the code remains unchanged
     // ...
     $mail->setFrom('bishalluitel6@gmail.com', 'Mailer'); 
-    $mail->addAddress('bishal.7037707@gpkmc.edu.np');                   // Name is optional
+    $mail->addAddress(''.$to.'');                   // Name is optional
     $mail->addReplyTo('info@bishalluitel.com.np', 'Information');
     $userName = $_SESSION['username'];
     $template = file_get_contents('templete.html');

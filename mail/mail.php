@@ -1,5 +1,6 @@
 <?php
-$to = "bishalluitel6@gmail.com";
+session_start();
+$to=$_SESSION['email'];
 $subject = "Congratulations on Your Registration";
 
 

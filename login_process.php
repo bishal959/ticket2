@@ -6,7 +6,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = $_POST["password"];
 
     // Fetch user details
-    $stmt = $conn->prepare("SELECT id, username, password FROM users WHERE username = ?");
+    $stmt = $conn->prepare("SELECT id, username, password,email FROM users WHERE username = ?");
     $stmt->bind_param("s", $username);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -20,6 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             session_start();
             $_SESSION["user_id"] = $user["id"];
             $_SESSION["username"] = $user["username"];
+            $_SESSION["email"] = $user["email"];
 
             header("Location: index.php");
             exit(); // Important to prevent further execution

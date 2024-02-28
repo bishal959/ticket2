@@ -34,6 +34,7 @@
             border: none;
             border-radius: 4px;
             cursor: pointer;
+
         }
     </style>
 </head>
@@ -48,7 +49,7 @@
     <input type="password" id="password" name="password" required>
 
     <button type="submit">Login</button>
-    <button ><a href="register.php">Register</a></button>
+    <button onclick="window.location.href='register.php';" >Register</button>
 </form>
 
 </body>
