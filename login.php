@@ -48,6 +48,7 @@
     <input type="password" id="password" name="password" required>
 
     <button type="submit">Login</button>
+    <button ><a href="register.php">Register</a></button>
 </form>
 
 </body>
