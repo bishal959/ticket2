@@ -17,7 +17,7 @@ try {
     $mail = new PHPMailer(true);
 
     // Server settings
-    // $mail->SMTPDebug = SMTP::DEBUG_LOWLEVEL;                 // Enable verbose debug output
+    $mail->SMTPDebug = SMTP::DEBUG_LOWLEVEL;                 // Enable verbose debug output
     $mail->isSMTP();                                        
     $mail->Host       = 'smtp.gmail.com';                   
     $mail->SMTPAuth   = true;                                
