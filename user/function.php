@@ -152,12 +152,26 @@ function printticket($userId, $book_seat) {
 
     try {
         // Select relevant columns from the bookings table and join with the movies table
-        $query = "SELECT movies.title AS movie_title, bookings.show_date, bookings.booked_seats AS quantity, bookings.price AS unit_price, (bookings.price * COUNT(bookings.id)) AS total_price ,bookings.token
-                  FROM bookings
-                  INNER JOIN movies ON bookings.movie_id = movies.id
-                  WHERE bookings.user_id = ? and bookings.book_type = 'paid' and bookings.booked_seats = ?
-                  GROUP BY movies.title, bookings.show_date, bookings.price,bookings.token
-                  LIMIT 0, 25";
+        $query = "SELECT 
+        movies.title AS movie_title, 
+        bookings.show_date, 
+        bookings.booked_seats AS quantity, 
+        MAX(bookings.price) AS unit_price,  -- Aggregate function for price
+        (MAX(bookings.price) * COUNT(bookings.id)) AS total_price,
+        bookings.token
+    FROM 
+        bookings
+    INNER JOIN 
+        movies ON bookings.movie_id = movies.id
+    WHERE 
+        bookings.user_id = ? 
+        AND bookings.book_type = 'paid' 
+        AND bookings.booked_seats = ?
+    GROUP BY 
+        movies.title, 
+        bookings.show_date, 
+        bookings.token;
+    ";
 
         $stmt = $conn->prepare($query);
 
