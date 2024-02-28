@@ -18,10 +18,8 @@ if (file_exists($htmlTemplatePath)) {
     $htmlTemplate = str_replace("{{event_url}}", $eventURL, $htmlTemplate);
     $htmlTemplate = str_replace("{{page_url}}", $pageURL, $htmlTemplate);
 
-    $headers = "From: mail@project.bishalluitel.com.np\\r\n";
-    $headers .= "Reply-To: sender@example.com\r\n";
-    $headers .= "CC: cc@example.com\r\n";
-    $headers .= "BCC: bcc@example.com\r\n";
+    $headers = "From: alert@project.bishalluitel.com.np\\r\n";
+    $headers .= "Reply-To: reply@project.bishalluitel.com.np\r\n";
     $headers .= "MIME-Version: 1.0\r\n";
     $headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
 
