@@ -1,7 +1,7 @@
 <?php
 $to = "bishalluitel6@gmail.com";
 $subject = "Congratulations on Your Registration";
-phpinfo();
+
 
 // Load the HTML template
 $htmlTemplatePath = "templete.html"; // Adjust the path based on your setup
@@ -18,7 +18,7 @@ if (file_exists($htmlTemplatePath)) {
     $htmlTemplate = str_replace("{{event_url}}", $eventURL, $htmlTemplate);
     $htmlTemplate = str_replace("{{page_url}}", $pageURL, $htmlTemplate);
 
-    $headers = "From: sender@example.com\r\n";
+    $headers = "From: mail@project.bishalluitel.com.np\\r\n";
     $headers .= "Reply-To: sender@example.com\r\n";
     $headers .= "CC: cc@example.com\r\n";
     $headers .= "BCC: bcc@example.com\r\n";
