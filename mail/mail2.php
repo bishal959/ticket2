@@ -27,13 +27,13 @@ try {
 
     // Rest of the code remains unchanged
     // ...
-    $mail->setFrom('bishalluitel6@gmail.com', 'Mailer'); 
+    $mail->setFrom('bishalluitel6@gmail.com', 'Alerts'); 
     $mail->addAddress(''.$to.'');                   // Name is optional
     $mail->addReplyTo('info@bishalluitel.com.np', 'Information');
     $mail->addAttachment('../tempdf/' . $userid . '.pdf');
     // $mail->addAttachment('/tmp/image.jpg', 'new.jpg');   
     $userName = $_SESSION['username'];
-    $template = file_get_contents('templete.html');
+    $template = file_get_contents('buy.html');
     $template = str_replace('{UserName}', $userName, $template);
         $mail->isHTML(true);
         $mail->Subject = 'Your Ticket is Confirmed';
