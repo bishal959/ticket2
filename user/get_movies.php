@@ -2,7 +2,6 @@
 
 include('config.php');
 
-
 $query = "SELECT id, title, release_date, genre, runTime, director, cast, image_url FROM movies";
 $result = $conn->query($query);
 
@@ -13,6 +12,8 @@ if (!$result) {
 
 $movies = [];
 while ($row = $result->fetch_assoc()) {
+    $castArray = ($row['cast'] !== null) ? explode(", ", $row['cast']) : [];
+    
     $movies[] = [
         'id' => $row['id'],
         'title' => $row['title'],
@@ -20,7 +21,7 @@ while ($row = $result->fetch_assoc()) {
         'genre' => $row['genre'],
         'runTime' => $row['runTime'],
         'director' => $row['director'],
-        'cast' => explode(", ", $row['cast']),
+        'cast' => $castArray,
         'imageUrl' => $row['image_url'],
     ];
 }
@@ -30,4 +31,5 @@ $conn->close();
 
 header("Content-Type: application/json");
 echo json_encode(['movies' => $movies]);
+
 ?>
