@@ -156,7 +156,8 @@ function printticket($userId, $book_seat) {
                   FROM bookings
                   INNER JOIN movies ON bookings.movie_id = movies.id
                   WHERE bookings.user_id = ? and bookings.book_type = 'paid' and bookings.booked_seats = ?
-                  GROUP BY movies.title, bookings.show_date, bookings.price";
+                  GROUP BY movies.title, bookings.show_date, bookings.price
+                  LIMIT 0, 25";
 
         $stmt = $conn->prepare($query);
 
